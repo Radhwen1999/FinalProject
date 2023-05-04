@@ -97,6 +97,8 @@
                                 <div class="product-buttons text-end mt-3">
                                     <button type="submit" class="btn btn-primary">Confirm Add</button>
                                     <button type="button" class="btn btn-light">Discard</button>
+                                    <button (click)="addProductToStore()" type="submit" class="btn btn-light">Affect To Store</button>
+
                                 </div>
                             </div>
                         </div>
@@ -115,4 +117,5 @@
         <input type="checkbox"  [(ngModel)]="isTrending" (change)="onCheckboxChange('new arrival', isTrending)">
         <span class="label-text">Trending</span>
     </label>
+
 </div>

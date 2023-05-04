@@ -108,7 +108,7 @@ export class NavService {
 		},
 		{
 			// tslint:disable-next-line:indent
-			title: 'Vendors', icon: 'users', type: 'sub', active: false, children: [
+			title: 'Stores', icon: 'users', type: 'sub', active: false, children: [
 				// tslint:disable-next-line:indent
 				{ path: '/vendors/list-vendors', title: 'Store List', type: 'link' },
 				// tslint:disable-next-line:indent
@@ -120,6 +120,7 @@ export class NavService {
 
 				// tslint:disable-next-line:indent
 				{ path: '/vendors/all-stores', title: 'All Stores', type: 'link' },
+				{ path: '/vendors/add-post', title: 'Add Post', type: 'link' },
 
 
 

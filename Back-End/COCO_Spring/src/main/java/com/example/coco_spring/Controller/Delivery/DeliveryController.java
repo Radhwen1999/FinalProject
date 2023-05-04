@@ -80,11 +80,11 @@ public class DeliveryController {
     public Delivery cancelDelivery(@PathVariable Long id) {
        return deliveryService.cancelDelivery(id);
     }
-    @GetMapping("/getNearestStorewithproduct/{productname}/{clientLatitude}/{clientLongitude}")
+    /*@GetMapping("/getNearestStorewithproduct/{productname}/{clientLatitude}/{clientLongitude}")
     public Map<String , StoreLocations> getNearestStorewithproduct(@PathVariable("productname") String productname,@PathVariable("clientLatitude") double clientLatitude,
                                                                    @PathVariable("clientLongitude") double clientLongitude) {
         return locationService.getNearestStorewithproduct(productname,clientLatitude,clientLongitude);
-    }
+    }*/
 
     @PutMapping("/changeStatusToProg/{id}")
     public  Delivery changeStatusToProg(@PathVariable("id")Long id){

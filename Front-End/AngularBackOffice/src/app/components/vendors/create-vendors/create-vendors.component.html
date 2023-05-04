@@ -55,12 +55,7 @@
                                     <option value="8">Industrial</option>
                                 </select>
                             </div>
-                            <div >
-                                <h3>Image Preview</h3>
-                                <div *ngFor="let url of store.storeImages">
-                                    <img [src]="url.url" width="300px" height="300px">
-                                </div>
-                            </div>
+
                             <label class="col-form-label pt-0"> Store Upload</label>
                             <div class="card-body dropzone-custom p-0">
                                 <ngx-dropzone class="dropzone-border" (change)="onSelect($event)">
@@ -70,9 +65,9 @@
                                             <h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
                                         </div>
                                     </ngx-dropzone-label>
-                                    <ngx-dropzone-preview *ngFor="let f of array" [removable]="true" (removed)="onRemove(f)">
-                                        <ngx-dropzone-label>{{ f.filefile.name }} ({{ f.filefile.type }})</ngx-dropzone-label>
-                                    </ngx-dropzone-preview>
+                                    <ngx-dropzone-image-preview [file]="f.filefile" *ngFor="let f of array" [removable]="true" (removed)="onRemove(f)">
+                                        <img [src]="f.url">
+                                    </ngx-dropzone-image-preview>
                                 </ngx-dropzone>
                             </div>
             <div class="form-group mb-0">

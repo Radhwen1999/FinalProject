@@ -351,8 +351,8 @@ public class StoreService implements ICRUDService<Store,Long> , IMPCocoService {
     }
     public Store AssignLocationtoStore(Long locationId, Long  StoreId) {
         Store store = storeRepository.findById(StoreId).get();
-        StoreLocations storeLocations = storeLocationsRepository.findById(locationId).get();
-        store.setStoreLocations(storeLocations);
+        //StoreLocations storeLocations = storeLocationsRepository.findById(locationId).get();
+      //  store.setStoreLocations(storeLocations);
         return storeRepository.save(store);
     }
 

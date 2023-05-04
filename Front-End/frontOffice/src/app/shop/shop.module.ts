@@ -46,6 +46,9 @@ import {RouterModule} from '@angular/router';
 import {ElementsModule} from "../elements/elements.module";
 import {NgxStarRatingModule} from "ngx-star-rating";
 import {PagesModule} from "../pages/pages.module";
+import { SubDialogueComponent } from './sub-dialogue/sub-dialogue.component';
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -76,19 +79,22 @@ import {PagesModule} from "../pages/pages.module";
     WishlistComponent,
     CompareComponent,
     CheckoutComponent,
-    SuccessComponent
+    SuccessComponent,
+    SubDialogueComponent
   ],
-  imports: [
-    CommonModule,
-    // NgxPayPalModule,
-    Ng5SliderModule,
-    InfiniteScrollModule,
-    SharedModule,
-    ShopRoutingModule,
-    RouterModule,
-    ElementsModule,
-    NgxStarRatingModule,
-    PagesModule
-  ]
+    imports: [
+        CommonModule,
+        // NgxPayPalModule,
+        Ng5SliderModule,
+        InfiniteScrollModule,
+        SharedModule,
+        ShopRoutingModule,
+        RouterModule,
+        ElementsModule,
+        NgxStarRatingModule,
+        PagesModule,
+        MatButtonModule,
+        MatDialogModule
+    ]
 })
 export class ShopModule { }

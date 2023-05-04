@@ -32,23 +32,23 @@ public class SubsciptionService {
         List<Product> allProducts=productRepository.findAll();
         List<List<Product>> topChosen=new ArrayList<>();
         Map<ProductCategory,List<Product>> topRatedProductByCategoryMap=new HashMap<>();
-        List<Product> colthingAndApparelProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.fashion)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> colthingAndApparelProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.fashion)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(colthingAndApparelProducts);
-        List<Product> homeGoodsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.HomeGoods)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> homeGoodsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.HomeGoods)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(homeGoodsProducts);
-        List<Product> electronicsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.electronics)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> electronicsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.electronics)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(electronicsProducts);
-        List<Product> beautyAndPersonalCareProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.BeautyAndPersonalCare)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> beautyAndPersonalCareProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.BeautyAndPersonalCare)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(beautyAndPersonalCareProducts);
-        List<Product> sportingGoodsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.SportingGoods)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> sportingGoodsProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.SportingGoods)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(sportingGoodsProducts);
-        List<Product> petSuppliesProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.PetSupplies)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> petSuppliesProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.PetSupplies)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(petSuppliesProducts);
-        List<Product> servicesProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.Services)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> servicesProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.Services)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(servicesProducts);
-        List<Product> foodGroceryProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.FoodAndGrocery)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> foodGroceryProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.FoodAndGrocery)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(foodGroceryProducts);
-        List<Product> industrialProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.Industrial)).sorted((a,b)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
+        List<Product> industrialProducts= allProducts.stream().filter(p -> p.getProductCategory().equals(ProductCategory.Industrial)).sorted((b,a)->reviewServices.numberOfLikes(a.getProductId())-reviewServices.numberOfLikes(b.getProductId())).limit(10).toList();
         topChosen.add(industrialProducts);
         for(List<Product> productList:topChosen){
             if(!productList.isEmpty()){

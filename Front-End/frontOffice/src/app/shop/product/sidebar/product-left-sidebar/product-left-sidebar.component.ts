@@ -7,6 +7,9 @@ import {CartService} from '../../../../services/cart.service';
 import {SizeModalComponent} from '../../../../shared/components/modal/size-modal/size-modal.component';
 import {ProductService} from '../../../../shared/services/product.service';
 import {User} from '../../../../shared/models/User';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {SubDialogueComponent} from "../../../sub-dialogue/sub-dialogue.component";
+import {Subscription} from "../../../../shared/classes/subscription";
 
 
 
@@ -19,6 +22,7 @@ export class ProductLeftSidebarComponent implements OnInit {
 
   public product: Product = {};
   public review: Review = {};
+  public subsciption: Subscription = {};
   user: User = new User();
   public counter = 1;
   public activeSlide: any = 0;
@@ -38,7 +42,21 @@ export class ProductLeftSidebarComponent implements OnInit {
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
   constructor(private route: ActivatedRoute, private router: Router, private cartService: CartService,
-              public productService: ProductService) {
+              public productService: ProductService, public dialog: MatDialog) {
+  }
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.position = {
+      left: '30%',
+      top: '12%'
+    };
+    dialogConfig.data = { product: this.product };
+    const dialogRef = this.dialog.open(SubDialogueComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   ngOnInit(): void {
@@ -48,7 +66,10 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.verifyDislikeProduct();
     this.verifyLikeProduct();
     console.log(this.product);
+    this.findSub();
+    console.log(this.subsciption);
   }
+
   refresh(product){
    this.product = product;
   }
@@ -119,6 +140,10 @@ export class ProductLeftSidebarComponent implements OnInit {
   // Decrement
   decrement() {
     if (this.counter > 1) { this.counter--; }
+  }
+  findSub() {
+    this.productService.findSub(this.product.productId).subscribe((resp) => {
+      console.log(resp); this.subsciption = resp; });
   }
 
   // Add to cart

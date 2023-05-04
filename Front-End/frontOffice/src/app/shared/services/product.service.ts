@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
@@ -8,6 +8,7 @@ import {ImageProcessingService} from './image-processing.service';
 import {Review} from '../classes/review';
 import {User} from '../models/User';
 import {AuthService} from './auth.service';
+import {Subscription} from "../classes/subscription";
 
 const state = {
   products: JSON.parse(localStorage.products || '[]'),
@@ -36,6 +37,8 @@ export class ProductService {
   readonly VERIFY_LIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly VERIFY_DISLIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly GET_AVERAGE_LIKES_OF_PRODUCT = 'http://localhost:9092/COCO/api/product/getaveragelikesofproduct/';
+  readonly SUBSCIBE_PRODUCT = 'http://localhost:9092/COCO/api/sub/subscribe/';
+  readonly FIND_SUB = 'http://localhost:9092/COCO/api/sub/findsub/';
   currentUser: User = new User();
   public id ;
 
@@ -113,14 +116,23 @@ export class ProductService {
   public verifyLikeProduct(productId): Observable<boolean>{
     return this.httpClient.get<boolean>(this.VERIFY_LIKE_PRODUCT + '/verifyifliked/' + this.id + '/' + productId );
   }
+  public subscribeToProduct(productId, months): Observable<Subscription>{
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<Subscription>(this.SUBSCIBE_PRODUCT + this.id + '/' + productId + '/subbedmonths/' + months, {} );
+  }
+  public findSub(productId): Observable<Subscription>{
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<Subscription>(this.FIND_SUB + this.id + '/' + productId );
+  }
   public verifyDisikeProduct(productId): Observable<boolean>{
     return this.httpClient.get<boolean>(this.VERIFY_DISLIKE_PRODUCT + '/verifyifdisliked/' + this.id + '/' + productId); }
   public disLikeProduct(productId){
-    return this.httpClient.post(this.DISLIKE_PRODUCT + '/' + this.id + '/dislike/' + productId , {});
+    return this.httpClient.post(this.DISLIKE_PRODUCT + this.id + '/dislike/' + productId , {});
   }
   public getAverageLikesOfProduct(productId){
     return this.httpClient.get<number>(this.GET_AVERAGE_LIKES_OF_PRODUCT + productId);
   }
+
 
   /*
     ---------------------------------------------

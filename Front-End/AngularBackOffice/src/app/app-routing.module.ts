@@ -42,7 +42,7 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {path: 'products/digital/digital-add-product' , component: DigitalAddComponent, resolve : {
-          product: ProductResolverService
+          product: ProductResolverService , store: StoreResolverService
         }  }
     ],
   },

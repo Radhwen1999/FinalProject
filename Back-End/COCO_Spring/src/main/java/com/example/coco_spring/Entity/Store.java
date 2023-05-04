@@ -44,8 +44,8 @@ public class Store implements Serializable {
 
 
 
-    @OneToOne
-    StoreLocations storeLocations;
+
+    private String storeLocations;
 
 
     @JsonIgnore

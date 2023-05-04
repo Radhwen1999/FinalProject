@@ -6,6 +6,8 @@ import {NgForm} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FileHandle} from '../../../../models/FileHandle';
 import {ActivatedRoute} from "@angular/router";
+import {StoreService} from "../../../../services/store/store.service";
+import {Store} from "../../../../models/store";
 
 @Component({
   selector: 'app-digital-add',
@@ -20,9 +22,12 @@ export class DigitalAddComponent implements OnInit {
   selectedItems: string[] = ['all products'];
   array: FileHandle[] = [];
   public Editor = ClassicEditor;
+  public  a: number ;
+  store: Store = new Store();
+
   isNew: boolean;
   isTrending: boolean;
-  constructor(private productService: ProductService, private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) { }
+  constructor(private storeservice: StoreService, private productService: ProductService, private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) { }
   product: Product = new Product();
   onCheckboxChange(item: string, isChecked: boolean) {
     if (isChecked) {
@@ -90,6 +95,26 @@ export class DigitalAddComponent implements OnInit {
     );
     this.array = [];
   }
+  addProductToStore(): void {
+    const productFormData = this.prepareFormData(this.product);
+    this.productService.addProduct(productFormData).subscribe(
+        (product: Product) => {
+          console.log('Product added successfully', product);
+          this.a = product.productId ;
+          this.storeservice.addProductStore(this.store.storeId, product.productId).subscribe(resp => console.log('affected succ '));
+          // Reset the form
+          this.product = new Product();
+        },
+        (error) => {
+          console.error('Failed to add product', error);
+        }
+    );
+
+    // this.storeservice.addProductStore()
+
+
+
+  }
   prepareFormData(product: Product): FormData{
     const formData = new FormData();
     //this.product.productImages = this.files;
@@ -100,5 +125,8 @@ export class DigitalAddComponent implements OnInit {
     }
     return formData;
   }
-  ngOnInit() { this.product = this.activatedRoute.snapshot.data.product; console.log(this.product);  }
+  ngOnInit() { this.product = this.activatedRoute.snapshot.data.product; console.log(this.product);
+               this.store = this.activatedRoute.snapshot.data.store ;
+               console.log(this.store); }
+
 }

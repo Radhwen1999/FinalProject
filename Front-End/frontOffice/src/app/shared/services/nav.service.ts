@@ -58,10 +58,10 @@ export class NavService {
 		},
 		{
 			title: 'Shop', type: 'sub', active: false, children: [
-				{ path: '/shop/collection/left/sidebar', title: 'left-sidebar', type: 'link' },
-				{ path: '/shop/collection/right/sidebar', title: 'right-sidebar', type: 'link' },
-				{ path: '/shop/collection/no/sidebar', title: 'no-sidebar', type: 'link' },
-				{ path: '/shop/collection/infinitescroll', title: 'Infinite Scroll', type: 'link' }
+				{ path: '/shop/shop-collection', title: 'All Stores', type: 'link' },
+				{ path: '/shop/collection/post-store', title: 'Postes', type: 'link' },
+				{ path: '/shop/collection/no/sidebar', title: 'Stores Catalog', type: 'link' },
+				//{ path: '/shop/collection/infinitescroll', title: 'Infinite Scroll', type: 'link' }
 			]
 		},
 		{

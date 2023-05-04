@@ -20,9 +20,6 @@ export interface Menu {
 
 export class NavService {
 
-	public  screenWidth:any
-	public collapseSidebar: boolean = false
-
 	constructor(@Inject(WINDOW) private window) {
 		this.onResize();
 		if (this.screenWidth < 991) {
@@ -30,13 +27,8 @@ export class NavService {
 		}
 	}
 
-
-	
-	// Windows width
-	@HostListener('window:resize', ['$event'])
-	onResize(event?) {
-		this.screenWidth = window.innerWidth;
-	}
+	public  screenWidth: any;
+	public collapseSidebar = false;
 
 
 	MENUITEMS: Menu[] = [
@@ -86,10 +78,10 @@ export class NavService {
 		},
 		{
 			title: 'Deliveries', icon: 'clipboard', type: 'sub', active: false, children: [
+				{ path: '/pages/delivery-component', title: 'List deliveries', type: 'link' },
 				{ path: '/pages/list-page', title: 'List delivery man', type: 'link' },
 				{ path: '/pages/create-page', title: 'Create delivery man', type: 'link' },
-				{ path: '/pages/provider-location', title: 'Provider Location', type: 'link' },
-]
+			]
 		},
 		{
 			title: 'Media', path: '/media', icon: 'camera', type: 'link', active: false
@@ -108,7 +100,7 @@ export class NavService {
 		},
 		{
 			// tslint:disable-next-line:indent
-			title: 'Vendors', icon: 'users', type: 'sub', active: false, children: [
+			title: 'Stores', icon: 'users', type: 'sub', active: false, children: [
 				// tslint:disable-next-line:indent
 				{ path: '/vendors/list-vendors', title: 'Store List', type: 'link' },
 				// tslint:disable-next-line:indent
@@ -120,6 +112,7 @@ export class NavService {
 
 				// tslint:disable-next-line:indent
 				{ path: '/vendors/all-stores', title: 'All Stores', type: 'link' },
+				{ path: '/vendors/add-post', title: 'Add Post', type: 'link' },
 
 
 
@@ -150,6 +143,14 @@ export class NavService {
 	];
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
+
+
+
+	// Windows width
+	@HostListener('window:resize', ['$event'])
+	onResize(event?) {
+		this.screenWidth = window.innerWidth;
+	}
 
 
 

@@ -50,18 +50,23 @@ public class OrderService implements ICRUDService<Order,Long> , IOrderService {
         return orderRepository.save(order);
     }
 
-
-
-    public Map<String,List<Order>> displayOrdersByProvider() {
-        List<String> findProviderNamesWithOrder = orderRepository.findProviderNamesWithOrder();
-        Map<String, List<Order>> map = new HashMap<>();
-        for (String obj : findProviderNamesWithOrder) {
-            map.put(obj,orderRepository.findByDelivery_Provider_ProviderName(obj));
-
-        }
-        return map;
+    @Override
+    public Map<String, List<Order>> displayOrdersByProvider() {
+        return null;
     }
 
+    /*
+
+        public Map<String,List<Order>> displayOrdersByProvider() {
+            List<String> findProviderNamesWithOrder = orderRepository.findProviderNamesWithOrder();
+            Map<String, List<Order>> map = new HashMap<>();
+            for (String obj : findProviderNamesWithOrder) {
+                map.put(obj,orderRepository.findByDelivery_Provider_ProviderName(obj));
+
+            }
+            return map;
+        }
+    */
     @Override
     public Order AssignCartToOrder(Long orderId, Long cartId) {
         Cart cart = cartRepsitory.findById(cartId).orElse(null);

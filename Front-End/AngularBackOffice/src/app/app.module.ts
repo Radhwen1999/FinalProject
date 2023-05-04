@@ -32,6 +32,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ListCatalogComponent } from './vendors/list-catalog/list-catalog.component';
 import {TableService} from './shared/service/table.service';
 import { BarRatingModule } from 'ngx-bar-rating';
+import { MapComponent } from './components/map/map.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { BarRatingModule } from 'ngx-bar-rating';
     AppComponent,
     ShowProductImagesDialogComponent,
     ListCatalogComponent,
+    MapComponent,
   ],
     imports: [
         BrowserAnimationsModule,

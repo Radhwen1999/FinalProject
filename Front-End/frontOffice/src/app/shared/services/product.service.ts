@@ -9,6 +9,8 @@ import {Review} from '../classes/review';
 import {User} from '../models/User';
 import {AuthService} from './auth.service';
 import {Subscription} from "../classes/subscription";
+import {types} from "sass";
+import List = types.List;
 
 const state = {
   products: JSON.parse(localStorage.products || '[]'),
@@ -39,6 +41,13 @@ export class ProductService {
   readonly GET_AVERAGE_LIKES_OF_PRODUCT = 'http://localhost:9092/COCO/api/product/getaveragelikesofproduct/';
   readonly SUBSCIBE_PRODUCT = 'http://localhost:9092/COCO/api/sub/subscribe/';
   readonly FIND_SUB = 'http://localhost:9092/COCO/api/sub/findsub/';
+  readonly UPDATE_ENDDATE_SUB = 'http://localhost:9092/COCO/api/sub/updatedateendsub';
+  readonly WIN_PRIZE = 'http://localhost:9092/COCO/api/sub/winprize/';
+  readonly DEL_SUB = 'http://localhost:9092/COCO/api/sub/deletesub/';
+  readonly GBT3_PRODUCT_GEN = 'http://localhost:9092/COCO/api/product/gbt3/';
+  readonly GET_TOP_FIVE_MOST_LIKED_PRODUCTS = 'http://localhost:9092/COCO/api/product/topfivemostlikedproducts';
+  readonly GET_SOLDE = 'http://localhost:9092/COCO/api/product/insuranceprice/';
+  readonly GET_PREMIUM_PRODUCTS = 'http://localhost:9092/COCO/api/product/premiumproducts';
   currentUser: User = new User();
   public id ;
 
@@ -63,10 +72,25 @@ export class ProductService {
     this.Products = this.httpClient.get<Product[]>(this.GET_ALL_PRODUCTS_API_URL);
     return this.Products;
   }
-
+  private get premiumProducts(): Observable<Product[]> {
+    this.Products = this.httpClient.get<Product[]>(this.GET_PREMIUM_PRODUCTS);
+    return this.Products;
+  }
+  getToopFiveMostLikeProducts(): Observable<Product[]>{
+    return this.httpClient.get<Product[]>(this.GET_TOP_FIVE_MOST_LIKED_PRODUCTS);
+  }
 
   public addToCart(productId){
     return this.httpClient.get('http://localhost:8089/radhwen/api/cart/addToCart/' + productId );
+  }
+  public deleteSub(subId){
+    return this.httpClient.delete(this.DEL_SUB + subId + '/' + this.id );
+  }
+  public findProductWithGBT3(input: string){
+    return this.httpClient.get<string[]>(this.GBT3_PRODUCT_GEN + input );
+  }
+  public winPrize(subId){
+    return this.httpClient.get<Product>(this.WIN_PRIZE + subId );
   }
   /*public getAllProducts(){
     this.getproducts()
@@ -82,6 +106,12 @@ export class ProductService {
   // Get Products
   public get getProducts(): Observable<Product[]> {
     return this.products.pipe(
+        map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+    );
+
+  }
+  public get getPremiumProducts(): Observable<Product[]> {
+    return this.premiumProducts.pipe(
         map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
     );
 
@@ -116,6 +146,9 @@ export class ProductService {
   public verifyLikeProduct(productId): Observable<boolean>{
     return this.httpClient.get<boolean>(this.VERIFY_LIKE_PRODUCT + '/verifyifliked/' + this.id + '/' + productId );
   }
+  public getSoldeOfUser(productId): Observable<number>{
+    return this.httpClient.get<number>(this.GET_SOLDE + productId + '/' + this.id );
+  }
   public subscribeToProduct(productId, months): Observable<Subscription>{
     // tslint:disable-next-line:max-line-length
     return this.httpClient.post<Subscription>(this.SUBSCIBE_PRODUCT + this.id + '/' + productId + '/subbedmonths/' + months, {} );
@@ -131,6 +164,9 @@ export class ProductService {
   }
   public getAverageLikesOfProduct(productId){
     return this.httpClient.get<number>(this.GET_AVERAGE_LIKES_OF_PRODUCT + productId);
+  }
+  public updateEndOfSubDate(subscription){
+    return this.httpClient.post<Subscription>(this.UPDATE_ENDDATE_SUB, subscription);
   }
 
 

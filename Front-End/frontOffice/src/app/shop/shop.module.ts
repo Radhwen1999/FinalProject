@@ -49,6 +49,7 @@ import {PagesModule} from "../pages/pages.module";
 import { SubDialogueComponent } from './sub-dialogue/sub-dialogue.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
+import { WinDialogueComponent } from './win-dialogue/win-dialogue.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     CompareComponent,
     CheckoutComponent,
     SuccessComponent,
-    SubDialogueComponent
+    SubDialogueComponent,
+    WinDialogueComponent
   ],
     imports: [
         CommonModule,

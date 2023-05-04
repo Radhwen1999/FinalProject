@@ -10,6 +10,7 @@ import com.example.coco_spring.Repository.*;
 
 import com.example.coco_spring.Service.Product.ProductServices;
 import com.example.coco_spring.Service.Store.StoreService;
+import com.example.coco_spring.Service.Subsciption.SubsciptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,13 @@ public class ProductController {
     ProductRepository productRepository;
     public List<String> collection = new ArrayList<>();
     StoreService storeService;
+    SubsciptionService subsciptionService;
     @Autowired
     private ObjectMapper jsonMapper;
     @Autowired private OpenAiApiClient client;
 
-    @GetMapping("/findmatchingaiproducts")
-    public ResponseEntity<List<Product>> chatWithGpt3(@RequestParam String message) throws Exception {
+    @GetMapping("/findmatchingaiproducts/{input}")
+    public ResponseEntity<List<Product>> chatWithGpt3(@PathVariable("input") String message) throws Exception {
         var completion = CompletionRequest.defaultWith("give me a list products which description is"+message);
         var postBodyJson = jsonMapper.writeValueAsString(completion);
         var responseBody = client.postToOpenAiApi(postBodyJson, OpenAiApiClient.OpenAiService.GPT_3);
@@ -56,6 +58,18 @@ public class ProductController {
             }
         }
         return ResponseEntity.ok(resultRes);
+    }
+    @GetMapping("/gbt3/{input}")
+    public ResponseEntity<List<String>> chatWithGpt3NoProduct(@PathVariable("input") String message) throws Exception {
+        var completion = CompletionRequest.defaultWith("give me a list products which description is"+message);
+        var postBodyJson = jsonMapper.writeValueAsString(completion);
+        var responseBody = client.postToOpenAiApi(postBodyJson, OpenAiApiClient.OpenAiService.GPT_3);
+        var completionResponse = jsonMapper.readValue(responseBody, CompletionResponse.class);
+
+        var result = completionResponse.firstAnswer().trim();
+        List<String> resultList = Arrays.asList(result.split("\n"));
+        resultList.replaceAll(s -> s.replaceAll("^\\d+\\.\\s*", ""));
+        return ResponseEntity.ok(resultList);
     }
 
     @PostMapping(value = "/addproduct",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -120,6 +134,10 @@ public class ProductController {
     @GetMapping("/insuranceprice/{idprod}/{iduser}")
     public double calculateProductInsurance(@PathVariable("idprod") Long productId,@PathVariable("iduser") Long idUser) {
         return productServices.calculateProductInsurance(productId,idUser);
+    }
+    @GetMapping("/premiumproducts")
+    public List<Product> getPremeiumProducts(){
+        return subsciptionService.premiumProducts();
     }
     @GetMapping("/gettotalpriceproducts")
     public  double getTotAlPriceProducts(){

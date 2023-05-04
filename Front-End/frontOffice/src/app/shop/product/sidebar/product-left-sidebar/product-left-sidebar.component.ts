@@ -10,7 +10,7 @@ import {User} from '../../../../shared/models/User';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {SubDialogueComponent} from "../../../sub-dialogue/sub-dialogue.component";
 import {Subscription} from "../../../../shared/classes/subscription";
-
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -28,8 +28,9 @@ export class ProductLeftSidebarComponent implements OnInit {
   public activeSlide: any = 0;
   public selectedSize: any;
   public mobileSidebar = false;
-  public liked;
-  public disliked;
+  public liked = false;
+  public disliked = false;
+  public getUSDate;
   rating = 3;
   starCount = 5;
   public reviews: Review[] = [];
@@ -51,7 +52,7 @@ export class ProductLeftSidebarComponent implements OnInit {
       left: '30%',
       top: '12%'
     };
-    dialogConfig.data = { product: this.product };
+    dialogConfig.data = { product: this.product, sub: this.subsciption };
     const dialogRef = this.dialog.open(SubDialogueComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -67,9 +68,33 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.verifyLikeProduct();
     console.log(this.product);
     this.findSub();
-    console.log(this.subsciption);
+   // console.log(this.subsciption);
+    //this.getDateUS();
+  }
+  shake() {
+    document.body.classList.add('shake');
+    setTimeout(() => {
+      document.body.classList.remove('shake');
+    }, 1000);
   }
 
+  glow() {
+    document.querySelector('button').classList.add('glow');
+  }
+
+  unglow() {
+    document.querySelector('button').classList.remove('glow');
+  }
+  public getDateUS(){
+    if (this.subsciption != null){
+     const datePipe = new DatePipe('en-US');
+     this.getUSDate = datePipe.transform(this.subsciption.dateEndOfSubscription, 'MMM dd yyyy');
+     console.log(this.getUSDate);
+   }
+  }
+  public getsub(){
+    
+  }
   refresh(product){
    this.product = product;
   }
@@ -114,6 +139,9 @@ export class ProductLeftSidebarComponent implements OnInit {
   reviewProduct(review: Review){
     this.productService.reviewProduct(review, this.product.productId).subscribe((product: Product) => {
           console.log('review added successfully', product);
+          this.router.navigateByUrl('/home/fashion', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['shop/product/left/sidebar/', {productId: this.product.productId}]);
+          });
           // Reset the form
         },
         (error) => {
@@ -143,7 +171,10 @@ export class ProductLeftSidebarComponent implements OnInit {
   }
   findSub() {
     this.productService.findSub(this.product.productId).subscribe((resp) => {
-      console.log(resp); this.subsciption = resp; });
+       this.subsciption = resp; console.log(this.subsciption);
+       const datePipe = new DatePipe('en-US');
+       this.getUSDate = datePipe.transform(this.subsciption.dateEndOfSubscription, 'MMM dd yyyy');
+       console.log(this.getUSDate); });
   }
 
   // Add to cart

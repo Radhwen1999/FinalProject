@@ -7,6 +7,7 @@ import com.example.coco_spring.Entity.User;
 import com.example.coco_spring.Repository.TokenRepository;
 import com.example.coco_spring.Repository.UserRepository;
 import com.example.coco_spring.Service.EmailService;
+
 import com.example.coco_spring.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

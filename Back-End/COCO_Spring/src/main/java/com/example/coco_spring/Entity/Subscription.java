@@ -28,7 +28,7 @@ public class Subscription {
     Date dateOfSubCreation;
     @Temporal(TemporalType.DATE)
     Date dateEndOfSubscription;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "subbedproduct")
             @JsonIgnore
     Product product;
@@ -37,7 +37,7 @@ public class Subscription {
 
     int remainingDaysINMonth;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "prize")
             @JsonIgnore
     Product prize;

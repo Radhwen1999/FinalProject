@@ -23,10 +23,7 @@ public class ReviewController {
     public Review affectReviewToProduct(@PathVariable("idUser") Long idUser, @PathVariable("idprod") Long productId,@RequestBody Review review){
             return reviewServices.affectReviewToProduct(idUser,productId,review);
     }
-    @PostMapping("{userId}/like/{idprod}")
-    public void likeProduct (@PathVariable("idprod") Long productId,@PathVariable("userId") Long idProd){
-        reviewServices.userLikesProduct(productId,idProd);
-    }
+
     @GetMapping("/getallreviews/{idprod}")
     public List<Review> getReviewsOfProduct(@PathVariable("idprod") Long idprod){
         Product product = productRepository.findById(idprod).get();
@@ -38,13 +35,13 @@ public class ReviewController {
         }
         return reviews;
     }
+    @PostMapping("{userId}/like/{idprod}")
+    public void likeProduct (@PathVariable("idprod") Long productId,@PathVariable("userId") Long idProd){
+        reviewServices.userLikesProduct(productId,idProd);
+    }
     @PostMapping("{userId}/dislike/{idprod}")
     public void dislikeProduct (@PathVariable("idprod") Long productId,@PathVariable("userId") Long idProd){
         reviewServices.userDislikesProduct(productId,idProd);
-    }
-    @GetMapping("/getuserbyreview/{idrev}")
-    public User getUserByReview(@PathVariable("idrev") Long idRev){
-        return reviewServices.getUserByReview(idRev);
     }
     @GetMapping("/getnbrlikes/{idprod}")
     public int numberOfLikes(@PathVariable("idprod") Long productId){
@@ -54,4 +51,9 @@ public class ReviewController {
     public int numberOfDislikes(@PathVariable("idprod") Long productId){
         return reviewServices.numberOfDisikes(productId);
     }
+    @GetMapping("/getuserbyreview/{idrev}")
+    public User getUserByReview(@PathVariable("idrev") Long idRev){
+        return reviewServices.getUserByReview(idRev);
+    }
+
 }

@@ -12,8 +12,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class FashionOneComponent implements OnInit {
   public products: Product[] = [];
+  public premiumProducts: Product[] = [];
   public productCollections: any[] = [];
+  public premiumProductCollections: any[] = [];
   public active;
+  public activePremium;
   public product;
   constructor(public productService: ProductService, private imageProcessingService: ImageProcessingService, private route: ActivatedRoute
               // tslint:disable-next-line:align
@@ -87,11 +90,12 @@ export class FashionOneComponent implements OnInit {
 
   ngOnInit(): void {
     this.Initialization();
+    this.getPremiumProducts();
   }
 
   // Product Tab collection
   public getCollectionProducts(collection) {
-    return this.products.filter((item) => {
+    return this.premiumProducts.filter((item) => {
       if (item.productCategory === collection) {
         return item;
       }
@@ -109,6 +113,20 @@ export class FashionOneComponent implements OnInit {
         });
       });
       this.active = this.productCollections[0];
+    });
+  }
+  public getPremiumProducts() {
+    this.productService.getPremiumProducts.subscribe(response => {
+      // tslint:disable-next-line:triple-equals
+      this.premiumProducts = response/*.filter(item => item.productCategory == 'electronics')*/;
+      // Get Product Collection
+      this.premiumProducts.filter((item) => {
+        item.collection.filter((collection) => {
+          const index = this.premiumProductCollections.indexOf(item.productCategory);
+          if (index === -1) { this.premiumProductCollections.push(item.productCategory); }
+        });
+      });
+      this.activePremium = this.premiumProductCollections[0];
     });
   }
   showProductDetails(productID) {

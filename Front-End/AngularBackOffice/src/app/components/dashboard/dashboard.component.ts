@@ -72,10 +72,17 @@ export class DashboardComponent implements OnInit {
   }
   public chartHovered(e: any): void {
   }
-  public getProductsTotalPrice(){
-    this.productService.getTotalProductsPrice().subscribe((res) => {this.price = res; });
+  ngOnInit() {
+    this.getTopFiveMostLikedProducts();
+    this.getProductsTotalPrice();
   }
+  public getProductsTotalPrice(){
+    this.productService.getTotalProductsPrice().subscribe((res) => {
+      this.price = res;
+      console.log(res);
+    } ); }
   public getTopFiveMostLikedProducts(){
+    // tslint:disable-next-line:max-line-length
     this.productService.getToopFiveMostLikeProducts().subscribe((res) => {this.top5MostLikeProducts = res; this.top5MostLikeProducts.forEach(
 product => {
 this.productService.getNumberOfLikesOfProduct(product.productId).subscribe(prod => product.numberOfLikes = prod);
@@ -84,9 +91,6 @@ this.productService.getNumberOfLikesOfProduct(product.productId).subscribe(prod 
 
   }
 
-  ngOnInit() {
-    this.getProductsTotalPrice();
-    this.getTopFiveMostLikedProducts();
-  }
+
 
 }

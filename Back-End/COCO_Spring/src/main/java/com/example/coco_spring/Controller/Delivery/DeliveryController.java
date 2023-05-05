@@ -34,6 +34,63 @@ public class DeliveryController {
 
         return deliveryService.findAll();
     }
+
+
+    @GetMapping("/retrive_delivery/{deliveryId}")
+    public Delivery retrieveDelivery(@PathVariable("deliveryId") Long deliveryId){
+
+        return deliveryService.retrieveItem(deliveryId);
+    }
+
+    @PostMapping("/add_delivery")
+
+    public Delivery addDelivery(@RequestBody Delivery delivery ){
+
+        return deliveryService.add(delivery);
+    }
+
+    @PutMapping("/update_delivery")
+    public Delivery updateDelivery(@RequestBody Delivery delivery){
+
+        return deliveryService.update(delivery);
+    }
+
+    @DeleteMapping("/delete_delivery/{deliveryId}")
+    public void deleteDelivery(@PathVariable("deliveryId") Long deliveryId){
+
+        deliveryService.delete(deliveryId);
+    }
+    @PutMapping("/assignDeliveryToOrder/{orderId}/{deliveryId}")
+    public void assignDeliveryToOrder(@PathVariable("orderId") Long orderId,@PathVariable("deliveryId") Long deliveryId){
+        deliveryService.assignDeliveryToOrder(orderId,deliveryId);
+    }
+
+    @PutMapping("/assignProviderDelivery/{deliveryId}/{providerId}")
+    public void assignProviderDelivery(@PathVariable("deliveryId") Long deliveryId,@PathVariable("providerId") Long providerId){
+        deliveryService.assignProviderDelivery(deliveryId,providerId);
+
+    }
+
+    @PostMapping("/dispatch/{userId}/{deliveryId}")
+    public Provider dispatchDeliveryToNearestDeliveryman(@PathVariable("userId")Long userId,@PathVariable("deliveryId") Long deliveryId) {
+        Delivery delivery = deliveryService.dispatchDeliveryToNearestDeliveryman(userId,deliveryId);
+        return delivery.getProvider();
+    }
+    @PutMapping("/cancelDelivery/{id}")
+    public Delivery cancelDelivery(@PathVariable Long id) {
+       return deliveryService.cancelDelivery(id);
+    }
+    /*@GetMapping("/getNearestStorewithproduct/{productname}/{clientLatitude}/{clientLongitude}")
+    public Map<String , StoreLocations> getNearestStorewithproduct(@PathVariable("productname") String productname,@PathVariable("clientLatitude") double clientLatitude,
+                                                                   @PathVariable("clientLongitude") double clientLongitude) {
+        return locationService.getNearestStorewithproduct(productname,clientLatitude,clientLongitude);
+    }*/
+
+    @PutMapping("/changeStatusToProg/{id}")
+    public  Delivery changeStatusToProg(@PathVariable("id")Long id){
+      return   deliveryService.changeStatusToProg(id);
+    }
+
     @PutMapping("/changeStatusToDelivered/{id}")
     public  Delivery changeStatusToDelivered(@PathVariable("id")Long id){
         return   deliveryService.changeStatusToDelivered(id);

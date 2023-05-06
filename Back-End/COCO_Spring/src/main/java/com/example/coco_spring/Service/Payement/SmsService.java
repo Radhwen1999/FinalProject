@@ -1,13 +1,15 @@
 package com.example.coco_spring.Service.Payement;
 
-import com.example.coco_spring.Entity.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
+
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import com.example.coco_spring.Entity.*;
+import com.example.coco_spring.Service.*;
+import com.example.coco_spring.Repository.*;
 
 
 @Component
@@ -17,7 +19,7 @@ public class SmsService {
 
     private final String ACCOUNT_SID ="ACfde9a7ca466cdec462f030c2c7054abb";
 
-    private final String AUTH_TOKEN = "5ea614a24e2c930f1ded475445fe35b0";
+    private final String AUTH_TOKEN = "188af444786994cfa4436f353537c38b";
 
     private final String FROM_NUMBER = "+15673646255";
 

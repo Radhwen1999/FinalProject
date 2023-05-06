@@ -36,12 +36,12 @@ import { MapComponent } from './components/map/map.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShowProductImagesDialogComponent,
-    ListCatalogComponent,
-    MapComponent,
-  ],
+    declarations: [
+        AppComponent,
+        ShowProductImagesDialogComponent,
+        ListCatalogComponent,
+        MapComponent,
+    ],
     imports: [
         BrowserAnimationsModule,
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -71,7 +71,10 @@ import { MapComponent } from './components/map/map.component';
         BarRatingModule,
         CarouselModule.forRoot(),
     ],
-  providers: [ProductService, TableService, DecimalPipe],
-  bootstrap: [AppComponent]
+    providers: [ProductService, TableService, DecimalPipe],
+    exports: [
+        MapComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

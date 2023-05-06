@@ -32,14 +32,16 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ListCatalogComponent } from './vendors/list-catalog/list-catalog.component';
 import {TableService} from './shared/service/table.service';
 import { BarRatingModule } from 'ngx-bar-rating';
+import { MapComponent } from './components/map/map.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShowProductImagesDialogComponent,
-    ListCatalogComponent,
-  ],
+    declarations: [
+        AppComponent,
+        ShowProductImagesDialogComponent,
+        ListCatalogComponent,
+        MapComponent,
+    ],
     imports: [
         BrowserAnimationsModule,
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -69,7 +71,10 @@ import { BarRatingModule } from 'ngx-bar-rating';
         BarRatingModule,
         CarouselModule.forRoot(),
     ],
-  providers: [ProductService, TableService, DecimalPipe],
-  bootstrap: [AppComponent]
+    providers: [ProductService, TableService, DecimalPipe],
+    exports: [
+        MapComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

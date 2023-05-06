@@ -42,6 +42,8 @@ import { MasonryGridTwoComponent } from './portfolio/masonry-grid-two/masonry-gr
 import { MasonryGridThreeComponent } from './portfolio/masonry-grid-three/masonry-grid-three.component';
 import { MasonryGridFourComponent } from './portfolio/masonry-grid-four/masonry-grid-four.component';
 import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonry-full-width.component';
+import { MapComponent } from './map/map.component';
+import {GetdirectionComponent} from './geo-code/getdirection.component';
 
 @NgModule({
     declarations: [
@@ -76,10 +78,13 @@ import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonr
         MasonryGridTwoComponent,
         MasonryGridThreeComponent,
         MasonryGridFourComponent,
-        MasonryFullWidthComponent
-    ],
+        MasonryFullWidthComponent,
+        MapComponent,
+        GetdirectionComponent    ],
     exports: [
-        ReviewComponent
+        ReviewComponent,
+        MapComponent,
+        GetdirectionComponent
     ],
     imports: [
         CommonModule,
@@ -88,5 +93,6 @@ import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonr
         SharedModule,
         PagesRoutingModule
     ]
+
 })
 export class PagesModule { }

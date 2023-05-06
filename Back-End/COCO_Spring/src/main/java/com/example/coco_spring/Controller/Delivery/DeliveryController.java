@@ -71,11 +71,7 @@ public class DeliveryController {
 
     }
 
-    @PostMapping("/dispatch/{userId}/{deliveryId}")
-    public Provider dispatchDeliveryToNearestDeliveryman(@PathVariable("userId")Long userId,@PathVariable("deliveryId") Long deliveryId) {
-        Delivery delivery = deliveryService.dispatchDeliveryToNearestDeliveryman(userId,deliveryId);
-        return delivery.getProvider();
-    }
+
     @PutMapping("/cancelDelivery/{id}")
     public Delivery cancelDelivery(@PathVariable Long id) {
        return deliveryService.cancelDelivery(id);

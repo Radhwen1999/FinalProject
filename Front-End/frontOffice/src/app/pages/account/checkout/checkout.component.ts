@@ -149,10 +149,12 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  onSubmit(delivery) {
+  onSubmit(delivery, order1) {
     this.addDelivery.addDeliveryWithLocation(delivery, this.lat, this.lng).subscribe((resp) => {
       console.log(resp);
     });
+
+    this.productService.addOrder( order1 ).subscribe((resp)=>{console.log(resp)});
 
   }
 }

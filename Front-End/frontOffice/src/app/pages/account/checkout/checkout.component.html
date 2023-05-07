@@ -48,6 +48,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group col-md-6 col-sm-6 col-xs-12">
             <div class="field-label">Town/City</div>
             <input type="text" [(ngModel)]="order1.City" name="town" [formControl]="checkoutForm.controls['town']" value="" placeholder="Enter Your City " autocomplete="off">
@@ -55,6 +56,7 @@
               City is required
             </div>
           </div>
+
 
           <div class="form-group col-md-6 col-sm-6 col-xs-12">
             <div class="field-label">Address</div>
@@ -219,7 +221,7 @@
 
 
                   <div class="text-end">
-                    <button  type="submit" class="btn-solid btn" (click)="onSubmit(delivery)">Place Order</button>
+                    <button  type="submit" class="btn-solid btn" (click)="onSubmit(delivery,order1)">Place Order</button>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,11 @@ import { Product } from '../../../shared/classes/product';
 import { ProductService } from '../../../shared/services/product.service';
 import {ImageProcessingService} from "../../../shared/services/image-processing.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ImageProceesingsService} from "../../../shared/services/img/image-proceesings.service";
+import {StoreService} from "../../../shared/services/store/store.service";
+import {Store} from "../../../shared/classes/store";
+import {HttpErrorResponse} from "@angular/common/http";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-fashion-one',
@@ -18,9 +23,10 @@ export class FashionOneComponent implements OnInit {
   public active;
   public activePremium;
   public product;
+  public stores: Store[] = [];
   constructor(public productService: ProductService, private imageProcessingService: ImageProcessingService, private route: ActivatedRoute
               // tslint:disable-next-line:align
-      , private router: Router) {
+      , private router: Router, private imageProcessingStore: ImageProceesingsService, private storeService: StoreService) {
   }
 
   public ProductSliderConfig: any = ProductSlider;
@@ -87,12 +93,26 @@ export class FashionOneComponent implements OnInit {
   }, {
     image: 'assets/images/logos/8.png',
   }];
-
+  public images = [];
   ngOnInit(): void {
     this.Initialization();
     this.getPremiumProducts();
+    this.getAllStores();
   }
-
+  public getAllStores(){
+    this.storeService.getAllStores()
+        .pipe(
+            map((x: Store[], i) => x.map((store: Store) => this.imageProcessingStore.createImages(store)))
+        )
+        .subscribe(
+            // tslint:disable-next-line:max-line-length
+            (resp: Store[]) => {console.log(resp); this.stores = resp; this.stores.forEach((store) => this.images.push(store.storeImages[0].url)); },
+            (error: HttpErrorResponse) => {console.log(error); }
+        );
+  }
+  public goToStoresPage(){
+    this.router.navigate(['/pages/collection']);
+  }
   // Product Tab collection
   public getCollectionProducts(collection) {
     return this.premiumProducts.filter((item) => {

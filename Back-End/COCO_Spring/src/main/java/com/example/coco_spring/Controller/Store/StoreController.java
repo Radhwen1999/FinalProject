@@ -104,7 +104,7 @@ public class StoreController {
         storeService.AffectProductToStore(storeId, productId);
     }
 
-    @PutMapping("/getProductsByStore/{storeId}")
+    @GetMapping("/getProductsByStore/{storeId}")
     public List<Product> getProductsByStore(@PathVariable("storeId") Long storeId) {
         return storeService.getProductsByStore(storeId);
         //return "test";

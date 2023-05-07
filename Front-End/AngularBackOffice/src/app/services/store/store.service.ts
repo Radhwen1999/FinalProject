@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Store} from '../../models/store';
 import {Observable} from 'rxjs';
 import {PosteStore} from "../../models/PostStore";
+import {Product} from "../../models/product";
 
 
 @Injectable({
@@ -52,6 +53,6 @@ export class StoreService {
   //   return this.http.put<Product[]>(url);
   // }
   getProductsByStore( id: number ){
-    return this.httpClient.put('http://localhost:9092/COCO/api/store/getProductsByStore/' + id,  null);
+    return this.httpClient.get<Product[]>('http://localhost:9092/COCO/api/store/getProductsByStore/' + id);
   }
 }

@@ -127,6 +127,12 @@ public class CartController {
     }
 
 
+    @GetMapping("/getindexCart")
+    public int getindexCart(){
+        return cartService.getindexCart();
+    }
+
+
 
 
 }

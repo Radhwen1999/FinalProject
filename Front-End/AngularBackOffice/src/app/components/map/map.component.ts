@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {initMap} from './GeoCode';
+//import {initMap} from './GeoCode';
 
 @Component({
   selector: 'app-map',
@@ -9,6 +9,6 @@ import {initMap} from './GeoCode';
 })
 export class MapComponent implements OnInit {
   ngOnInit(): void {
-    initMap();
+    //initMap();
   }
 }

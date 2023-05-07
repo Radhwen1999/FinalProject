@@ -12,6 +12,11 @@ import {SubDialogueComponent} from "../../../sub-dialogue/sub-dialogue.component
 import {Subscription} from "../../../../shared/classes/subscription";
 import { DatePipe } from '@angular/common';
 
+import {NgForm} from "@angular/forms";
+
+import {FileHandle} from '../../../../shared/classes/product';
+import {CartItem} from "../../../../shared/classes/CartItem";
+
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -20,6 +25,7 @@ import { DatePipe } from '@angular/common';
 })
 export class ProductLeftSidebarComponent implements OnInit {
 
+  public cartItems: CartItem[] = [];
   public product: Product = {};
   public review: Review = {};
   public subsciption: Subscription = {};
@@ -36,6 +42,9 @@ export class ProductLeftSidebarComponent implements OnInit {
   public reviews: Review[] = [];
   public active = 1;
 
+  files: File[] = [];
+  array: FileHandle[] = [];
+
 
   @ViewChild('sizeChart') SizeChart: SizeModalComponent;
 
@@ -44,6 +53,10 @@ export class ProductLeftSidebarComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private cartService: CartService,
               public productService: ProductService, public dialog: MatDialog) {
+  }
+
+  addProductToCartItem(cartId, productId, quantity){
+    this.productService.addProductToCartItem(cartId, productId, quantity).subscribe();
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

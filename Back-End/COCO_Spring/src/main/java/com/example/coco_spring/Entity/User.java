@@ -37,6 +37,9 @@ public class User implements UserDetails {
     private String password;
     private Integer codeReset;
     private String address;
+    private Integer zipCode;
+    private String city;
+    private String country;
     @Temporal(TemporalType.DATE)
     private Date dayOfBirth;
     private String cin;
@@ -54,8 +57,8 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToOne
     Cart cart;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<Review> reviews;
 
 
@@ -132,7 +135,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     List<LikeDislikeProduct> likeDislikeProductList;
+
     @OneToMany(mappedBy = "user")
-            @JsonIgnore
+    @JsonIgnore
     List<Subscription> subscriptions;
 }

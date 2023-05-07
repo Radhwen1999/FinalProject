@@ -15,20 +15,56 @@
 
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">First Name</div>
-              <input type="text" name="field-name" value="" placeholder="" [(ngModel)]="delivery.clientAddress">
+              <input  type="text" [(ngModel)]="order1.FirstName" name="firstname" [formControl]="checkoutForm.controls['firstname']" value="" placeholder="Enter First Name" >
+
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Last Name </div>
-              <input type="text" name="field-name" value="" placeholder="">
+              <input type="text" [(ngModel)]="order1.LastName" name="lastname" [formControl]="checkoutForm.controls['lastname']" value="" placeholder="" autocomplete="off">
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Phone</div>
-              <input type="text" name="field-name" value="" placeholder="">
+              <input type="text" [(ngModel)]="order1.Phone" name="phone" [formControl]="checkoutForm.controls['phone']" value="" placeholder="" autocomplete="off">
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Email Address</div>
-              <input type="text" name="field-name" value="" placeholder="">
+              <input type="text" [(ngModel)]="order1.EmailAddress" name="email" [formControl]="checkoutForm.controls['email']" value="" placeholder="" autocomplete="off">
             </div>
+
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+              <div class="field-label">Country</div>
+              <select name="country" [formControl]="checkoutForm.controls['country']">
+                <select name="country" [(ngModel)]="order1.Country" [formControl]="checkoutForm.controls['country']">
+                  <option value="" selected>Select Country</option>
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                </select>
+              </select>
+            </div>
+
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+              <div class="field-label">Address</div>
+              <input type="text" name="field-name" value="" placeholder="" [(ngModel)]="delivery.clientAddress">
+
+            </div>
+
+          </div>
+          <div class="form-group col-md-12 col-sm-12 col-xs-12">
+            <div class="field-label">Town/City</div>
+            <input type="text" [(ngModel)]="order1.City" name="town" [formControl]="checkoutForm.controls['town']" value="" placeholder="" autocomplete="off">
+            <div *ngIf="checkoutForm.controls.town.touched && checkoutForm.controls.town.errors?.required" class="text text-danger">
+              City is required
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-12 col-sm-6 col-xs-12">
+            <div class="field-label">Postal Code</div>
+           <input type="text" [(ngModel)]="order1.PostalCode" name="postalcode" [formControl]="checkoutForm.controls['postalcode']"  placeholder="" autocomplete="off">
+            <div *ngIf="checkoutForm.controls.postalcode.touched && checkoutForm.controls.postalcode.errors?.required" class="text text-danger">
+              Postalcode is required
+            </div>
+
 
             <div *ngIf="!isContentHidden" id="page-content" >
               <div style="width: 100%; height: 500px;">
@@ -95,18 +131,41 @@
                 </div>
               </div>
             </div>
+
+
             <div class="col-lg-6 col-sm-12 col-xs-12">
               <div class="checkout-details">
                 <div class="order-box">
                   <div class="title-box">
                     <div>Product <span> Total</span></div>
                   </div>
-                  <ul class="qty">
-                    <li>Pink Slim Shirt × 1 <span>$25.10</span></li>
-                    <li>SLim Fit Jeans × 1 <span>$555.00</span></li>
+
+
+                  <ul class="qty" *ngIf='cartItems.length'>
+                    <li *ngFor="let cartItem of cartItems">
+                      {{ cartItem.product.title }} × {{ cartItem.quantity }}
+                      <span>
+                                                {{ cartItem.product.price | currency:productService?.Currency.currency:'symbol' }}
+                                            </span>
+                    </li>
                   </ul>
+                  <ul class="qty" *ngIf='!cartItems.length'>
+                    <li class="empty-checkout"> There are no products in cart </li>
+                  </ul>
+                  <ul class="total">
+                    <li>
+                      Discount <span class="count"> - {{ (getTotalD() | currency:productService?.Currency.currency:'symbol') }}</span>
+                    </li>
+                  </ul>
+
                   <ul class="sub-total">
-                    <li>Subtotal <span class="count">$380.10</span></li>
+
+                    <ul class="total">
+                      <li>
+                        Discount <span class="count"> - {{ (getTotalD() | currency:productService?.Currency.currency:'symbol') }}</span>
+                      </li>
+                    </ul>
+
                     <li>Shipping <div class="shipping">
                       <div class="shopping-option">
                         <input type="checkbox" name="free-shipping" id="free-shipping">
@@ -121,7 +180,7 @@
                   </ul>
 
                   <ul class="total">
-                    <li>Total <span class="count">$620.00</span></li>
+                    <li>Total <span class="count">{{ getTotal | currency:productService?.Currency.currency:'symbol'}}</span></li>
                   </ul>
                 </div>
 
@@ -131,26 +190,31 @@
                       <ul>
                         <li>
                           <div class="radio-option">
-                            <input type="radio" name="payment-group" id="payment-1" checked>
-                            <label for="payment-1">Check Payments<span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
-                          </div>
-                        </li>
-
-                        <li>
-                          <div class="radio-option">
-                            <input type="radio" name="payment-group" id="payment-2">
-                            <label for="payment-2">Cash On Delivery<span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
+                            <input type="radio" [(ngModel)]="payment" [value]="'Stripe'"  name="payment-group" id="payment-2">
+                            <label for="payment-2">Stripe
+                              <span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
                           </div>
                         </li>
                         <li>
                           <div class="radio-option paypal">
-                            <input type="radio" name="payment-group" id="payment-3">
+                            <input type="radio" [(ngModel)]="payment" [value]="'Paypal'" name="payment-group" id="payment-3">
                             <label for="payment-3">PayPal<span class="image"><img src="assets/images/paypal.png" alt="" /></span></label>
                           </div>
                         </li>
                       </ul>
                     </div>
                   </div>
+
+                  <div class="text-end">
+                    <button type="submit" class="btn-solid btn"  (click)="stripeCheckout()" >
+                      Place Payment
+                    </button>
+
+                  </div>
+
+
+
+
                   <div class="text-end">
                     <button  type="submit" class="btn-solid btn" (click)="onSubmit(delivery)">Place Order</button>
                   </div>

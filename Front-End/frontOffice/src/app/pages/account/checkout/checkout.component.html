@@ -15,52 +15,59 @@
 
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">First Name</div>
-              <input  type="text" [(ngModel)]="order1.FirstName" name="firstname" [formControl]="checkoutForm.controls['firstname']" value="" placeholder="Enter First Name" >
+              <input  type="text" [(ngModel)]="order1.FirstName" name="firstname" [formControl]="checkoutForm.controls['firstname']" value="" placeholder="Enter Your First Name" >
 
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Last Name </div>
-              <input type="text" [(ngModel)]="order1.LastName" name="lastname" [formControl]="checkoutForm.controls['lastname']" value="" placeholder="" autocomplete="off">
+              <input type="text" [(ngModel)]="order1.LastName" name="lastname" [formControl]="checkoutForm.controls['lastname']" value="" placeholder="Enter Your Last Name" autocomplete="off">
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Phone</div>
-              <input type="text" [(ngModel)]="order1.Phone" name="phone" [formControl]="checkoutForm.controls['phone']" value="" placeholder="" autocomplete="off">
+              <input type="text" [(ngModel)]="order1.Phone" name="phone" [formControl]="checkoutForm.controls['phone']" value="" placeholder="Enter Your Phone Number" autocomplete="off">
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
               <div class="field-label">Email Address</div>
-              <input type="text" [(ngModel)]="order1.EmailAddress" name="email" [formControl]="checkoutForm.controls['email']" value="" placeholder="" autocomplete="off">
+              <input type="text" [(ngModel)]="order1.EmailAddress" name="email" [formControl]="checkoutForm.controls['email']" value="" placeholder="Enter Your Email Address" autocomplete="off">
             </div>
 
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
               <div class="field-label">Country</div>
               <select name="country" [formControl]="checkoutForm.controls['country']">
-                <select name="country" [(ngModel)]="order1.Country" [formControl]="checkoutForm.controls['country']">
-                  <option value="" selected>Select Country</option>
-                  <option value="India">India</option>
-                  <option value="USA">USA</option>
-                </select>
+                <option value="" selected>Select Country</option>
+                <option value="Tunisia">Tunisia</option>
+                <option value="Qatar">Qatar</option>
+                <option value="UAE">UAE</option>
+                <option value="Canada">Canada</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="Australia">Australia</option>
               </select>
+              <div *ngIf="checkoutForm.controls.country.touched && checkoutForm.controls.country.errors?.required" class="text text-danger">
+                Country is required
+              </div>
             </div>
-
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-              <div class="field-label">Address</div>
-              <input type="text" name="field-name" value="" placeholder="" [(ngModel)]="delivery.clientAddress">
-
-            </div>
-
           </div>
-          <div class="form-group col-md-12 col-sm-12 col-xs-12">
+          <div class="form-group col-md-6 col-sm-6 col-xs-12">
             <div class="field-label">Town/City</div>
-            <input type="text" [(ngModel)]="order1.City" name="town" [formControl]="checkoutForm.controls['town']" value="" placeholder="" autocomplete="off">
+            <input type="text" [(ngModel)]="order1.City" name="town" [formControl]="checkoutForm.controls['town']" value="" placeholder="Enter Your City " autocomplete="off">
             <div *ngIf="checkoutForm.controls.town.touched && checkoutForm.controls.town.errors?.required" class="text text-danger">
               City is required
             </div>
           </div>
 
+          <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <div class="field-label">Address</div>
+            <input type="text" name="field-name" value="" placeholder="Enter Your Address" [(ngModel)]="delivery.clientAddress">
 
-          <div class="form-group col-md-12 col-sm-6 col-xs-12">
+          </div>
+
+
+
+
+          <div class="form-group col-md-6 col-sm-6 col-xs-12">
             <div class="field-label">Postal Code</div>
-           <input type="text" [(ngModel)]="order1.PostalCode" name="postalcode" [formControl]="checkoutForm.controls['postalcode']"  placeholder="" autocomplete="off">
+           <input type="text" [(ngModel)]="order1.PostalCode" name="postalcode" [formControl]="checkoutForm.controls['postalcode']"  placeholder="Enter Your Postal Code" autocomplete="off">
             <div *ngIf="checkoutForm.controls.postalcode.touched && checkoutForm.controls.postalcode.errors?.required" class="text text-danger">
               Postalcode is required
             </div>
@@ -72,11 +79,11 @@
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Latitude</div>
-                  <input type="text"  name="field-name" value="" id="latitude" [(ngModel)]="lat" placeholder="">
+                  <input type="text"  name="field-name" value="" id="latitude" [(ngModel)]="lat" placeholder="Click The Map">
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Longitude</div>
-                  <input type="text" name="field-name"id="longitude" [(ngModel)]="lng" value="" placeholder="">
+                  <input type="text" name="field-name"id="longitude" [(ngModel)]="lng" value="" placeholder="Click The Map">
                 </div>
                 <app-geoCode></app-geoCode>
               </div>
@@ -133,20 +140,16 @@
             </div>
 
 
-            <div class="col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-lg-16 col-sm-12 col-xs-12">
               <div class="checkout-details">
                 <div class="order-box">
                   <div class="title-box">
                     <div>Product <span> Total</span></div>
                   </div>
-
-
                   <ul class="qty" *ngIf='cartItems.length'>
                     <li *ngFor="let cartItem of cartItems">
                       {{ cartItem.product.title }} × {{ cartItem.quantity }}
-                      <span>
-                                                {{ cartItem.product.price | currency:productService?.Currency.currency:'symbol' }}
-                                            </span>
+                      <span>{{ cartItem.product.price | currency:productService?.Currency.currency:'symbol' }}</span>
                     </li>
                   </ul>
                   <ul class="qty" *ngIf='!cartItems.length'>

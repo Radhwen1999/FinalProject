@@ -145,7 +145,12 @@ export class CartComponent implements OnInit {
 
 
   public removeItemCART(id: number) {
-    this.productService.removeCartItemm(id);
+    this.productService.removeCartItemm(id).subscribe(
+        (response) => {
+          this.getCartItemsWithProducts();
+        }
+    );
+
   }
 
   getCartDetails(){

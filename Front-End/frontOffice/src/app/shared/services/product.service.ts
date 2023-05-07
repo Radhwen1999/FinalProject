@@ -8,11 +8,11 @@ import {ImageProcessingService} from './image-processing.service';
 import {Review} from '../classes/review';
 import {User} from '../models/User';
 import {AuthService} from './auth.service';
-import {Subscription} from "../classes/subscription";
-import {types} from "sass";
+import {Subscription} from '../classes/subscription';
+import {types} from 'sass';
 import { Order1 } from '../classes/order1';
-import {CartItem} from "../classes/CartItem";
-import {SmsPojo} from "../classes/SmsPojo";
+import {CartItem} from '../classes/CartItem';
+import {SmsPojo} from '../classes/SmsPojo';
 import List = types.List;
 
 const state = {
@@ -61,6 +61,10 @@ export class ProductService {
   readonly CARTITEM = 'http://localhost:9092/COCO/api/cart/cartItem';
   readonly GET_CART_ITEM_WITH_PRODUCTS = 'http://localhost:9092/COCO/api/cart/getCartItemsWithProducts';
   readonly DELETE_CARTITEM = 'http://localhost:9092/COCO/api/cart/delete_cartItem/';
+
+  readonly GET_CART_INDEX = 'http://localhost:9092/COCO/api/cart/getindexCart';
+
+
   /////////////////////////////////////////////////////////////////////////
 
   readonly ADD_ORDERS = 'http://localhost:9092/COCO/api/order1/add_order';
@@ -142,6 +146,11 @@ export class ProductService {
     return this.httpClient.get<Product[]>(this.GET_ALL_PRODUCTS_API_URLL);
   }
 
+
+  public getCartIndex(){
+    return this.httpClient.get<number>(this.GET_CART_INDEX);
+  }
+
   public addProductToCartItem(cartId, productId, quantity){
     const url = `${this.CARTITEM}/${cartId}/${productId}/${quantity}`;
     return this.httpClient.post(url, null);
@@ -159,7 +168,7 @@ export class ProductService {
 
   public getCartTotalAmount(cartItems: CartItem[]): number {
     let totalAmount = 0;
-    for (let cartItem of cartItems) {
+    for (const cartItem of cartItems) {
       let price = cartItem.product.price;
       if (cartItem.product.discount) {
         price = cartItem.product.price - (cartItem.product.price * cartItem.product.discount / 100);

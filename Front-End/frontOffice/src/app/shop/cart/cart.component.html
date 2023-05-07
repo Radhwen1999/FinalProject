@@ -84,9 +84,9 @@
 
                         </td>
                         <td>
-                            <a [routerLink]="'/shop/cart/'"  (click)="removeItemCART(cartItem.id)" >
-                                <i class="fa fa-trash">delete</i>
-                            </a>
+
+
+                            <a  (click)="removeItemCART(cartItem.id)" href="javascript:void(0)"><i class="fa fa-trash-o"> Delete</i></a>
                         </td>
                         <td>
                             <h2 class="td-color">
@@ -115,7 +115,7 @@
                 <a [routerLink]="['/shop/collection/left/sidebar']" class="btn btn-solid">continue shopping</a>
             </div>
             <div class="col-6">
-                <a [routerLink]="['/shop/checkout']" class="btn btn-solid">check out</a>
+                <a [routerLink]="['/pages/checkout']" class="btn btn-solid">check out</a>
             </div>
         </div>
     </div>

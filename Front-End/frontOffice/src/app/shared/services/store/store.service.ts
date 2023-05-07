@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthService} from '../auth.service';
-import {Store} from "../../classes/store";
-import {PosteStore} from "../../classes/PostStore";
-import {PostLike} from "../../classes/PostLike";
-import {PostComment} from "../../classes/PostComment";
-import {Product} from "../../classes/product";
+import {Store} from '../../classes/store';
+import {PosteStore} from '../../classes/PostStore';
+import {PostLike} from '../../classes/PostLike';
+import {PostComment} from '../../classes/PostComment';
+import {Product} from '../../classes/product';
 
 // @ts-ignore
 
@@ -30,13 +30,14 @@ export class StoreService {
     // @ts-ignore
 
   }
-  getStoreDetails(storeId){
+
+  getStoreDetails(storeId) {
     return this.httpClient.get<Store>(this.FIND_BY_ID + storeId);
   }
+
   getAllStores() {
     return this.httpClient.get<Store[]>(this.Get_Store);
   }
-
 
 
   getPosts(): Observable<PosteStore[]> {
@@ -46,23 +47,28 @@ export class StoreService {
   addPostLike(id: string, postLike: PostLike) {
     return this.httpClient.post<PostLike>('http://localhost:9092/COCO/api/store/add-Like-post/' + id + '/1', postLike);
   }
+
   addPostDisLike(id: string, postLike: PostLike) {
     return this.httpClient.post<PostLike>('http://localhost:9092/COCO/api/store/add-DisLike-post/' + id + '/1', postLike);
   }
-  ratePost(idp: string , x: string) {
+
+  ratePost(idp: string, x: string) {
     // @ts-ignore
-    return this.httpClient.put<PostComment>('http://localhost:9092/COCO/api/store/Give-post-etoile/' + idp + '/'  + x );
+    return this.httpClient.put<PostComment>('http://localhost:9092/COCO/api/store/Give-post-etoile/' + idp + '/' + x);
 
   }
-  reportPost(idp: string ) {
-    return this.httpClient.get<any>('http://localhost:9092/COCO/api/store/Report-Post/' + idp );
+
+  reportPost(idp: string) {
+    return this.httpClient.get<any>('http://localhost:9092/COCO/api/store/Report-Post/' + idp);
 
   }
+
   addCommentPst(idPost: string, postComment: PostComment) {
     return this.httpClient.post<Comment>('http://localhost:9092/COCO/api/store/add-Comment/' + idPost + '/1', postComment);
   }
-  getProductsByStore( id: number ){
+
+  getProductsByStore(id: number) {
     return this.httpClient.get<Product[]>('http://localhost:9092/COCO/api/store/getProductsByStore/' + id);
   }
-
 }
+

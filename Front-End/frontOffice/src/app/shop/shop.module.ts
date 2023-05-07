@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 // import { NgxPayPalModule } from 'ngx-paypal';
 import { Ng5SliderModule } from 'ng5-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -50,6 +51,10 @@ import { SubDialogueComponent } from './sub-dialogue/sub-dialogue.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { WinDialogueComponent } from './win-dialogue/win-dialogue.component';
+import {PostStoreComponent} from "./collection/post-store/post-store.component";
+import {PostDetailComponent} from "./collection/post-detail/post-detail.component";
+import { ShopCollectionComponent } from './shop-collection/shop-collection.component';
+
 
 
 @NgModule({
@@ -82,7 +87,10 @@ import { WinDialogueComponent } from './win-dialogue/win-dialogue.component';
     CheckoutComponent,
     SuccessComponent,
     SubDialogueComponent,
-    WinDialogueComponent
+    WinDialogueComponent,
+      PostStoreComponent,
+      PostDetailComponent,
+      ShopCollectionComponent,
   ],
     imports: [
         CommonModule,
@@ -96,6 +104,7 @@ import { WinDialogueComponent } from './win-dialogue/win-dialogue.component';
         NgxStarRatingModule,
         PagesModule,
         MatButtonModule,
+        FormsModule,
         MatDialogModule
     ]
 })

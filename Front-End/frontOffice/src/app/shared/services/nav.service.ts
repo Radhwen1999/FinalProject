@@ -58,7 +58,7 @@ export class NavService {
 		},
 		{
 			title: 'Shop', type: 'sub', active: false, children: [
-				{ path: '/shop/shop-collection', title: 'All Stores', type: 'link' },
+				{ path: '/shop/collection/shop-collection', title: 'All Stores', type: 'link', },
 				{ path: '/shop/collection/post-store', title: 'Postes', type: 'link' },
 				{ path: '/shop/collection/no/sidebar', title: 'Stores Catalog', type: 'link' },
 				//{ path: '/shop/collection/infinitescroll', title: 'Infinite Scroll', type: 'link' }

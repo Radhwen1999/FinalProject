@@ -69,6 +69,10 @@ public class StoreController {
     public List<Store> findAll() {
         return storeService.findAll();
     }
+    @GetMapping("/Get-all-Post")
+    public List<PostStore> findAllS() {
+        return storeService.findAllS();
+    }
 
     @PutMapping("/updateStore")
     public Store update(@RequestBody Store store) {

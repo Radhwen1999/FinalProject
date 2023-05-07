@@ -27,4 +27,7 @@ public class LikeDislikeProduct
     @ManyToOne
     @JsonIgnore
     Product product;
+    @ManyToOne
+    @JsonIgnore
+    Review review;
 }

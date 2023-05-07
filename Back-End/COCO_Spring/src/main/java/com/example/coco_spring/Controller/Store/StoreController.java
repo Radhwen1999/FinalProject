@@ -69,6 +69,10 @@ public class StoreController {
     public List<Store> findAll() {
         return storeService.findAll();
     }
+    @GetMapping("/Get-all-Post")
+    public List<PostStore> findAllS() {
+        return storeService.findAllS();
+    }
 
     @PutMapping("/updateStore")
     public Store update(@RequestBody Store store) {
@@ -100,7 +104,7 @@ public class StoreController {
         storeService.AffectProductToStore(storeId, productId);
     }
 
-    @PutMapping("/getProductsByStore/{storeId}")
+    @GetMapping("/getProductsByStore/{storeId}")
     public List<Product> getProductsByStore(@PathVariable("storeId") Long storeId) {
         return storeService.getProductsByStore(storeId);
         //return "test";

@@ -10,4 +10,6 @@ export interface Review{
     createdAt?: Date;
     name?: string;
     user?: User;
+    likes?: number;
+    dislikes?: number;
 }

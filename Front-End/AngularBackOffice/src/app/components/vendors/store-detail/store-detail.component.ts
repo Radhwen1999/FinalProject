@@ -62,7 +62,12 @@ export class StoreDetailComponent implements OnInit{
     console.log(this.store);
   }
   public AddProduct(storeID) {
-    this.route.navigate(['/products/digital/digital-add-product',  {storeId: storeID}]);
+    if(this.store.category === 'electronics'){
+      this.route.navigate(['/products/digital/digital-add-product',  {storeId: storeID}]);
+    }
+    if(this.store.category === 'fashion'){
+      this.route.navigate(['/products/physical/add-product',  {storeId: storeID}]);
+    }
   }
   affectProductToStore() {
     const storeId = 1; // l'identifiant du magasin

@@ -12,7 +12,7 @@ import {SubDialogueComponent} from "../../../sub-dialogue/sub-dialogue.component
 import {Subscription} from "../../../../shared/classes/subscription";
 import { DatePipe } from '@angular/common';
 
-import {NgForm} from "@angular/forms";
+import {NgForm, UntypedFormGroup} from "@angular/forms";
 
 import {FileHandle} from '../../../../shared/classes/product';
 import {CartItem} from "../../../../shared/classes/CartItem";
@@ -24,6 +24,8 @@ import {CartItem} from "../../../../shared/classes/CartItem";
   styleUrls: ['./product-left-sidebar.component.scss']
 })
 export class ProductLeftSidebarComponent implements OnInit {
+
+  public checkoutForm:  UntypedFormGroup;
 
   public cartItems: CartItem[] = [];
   public product: Product = {};

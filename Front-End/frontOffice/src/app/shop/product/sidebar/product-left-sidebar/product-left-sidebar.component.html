@@ -93,7 +93,9 @@
                     </div>
                   </div>
                   <div class="product-buttons">
-                    <a  [routerLink]="['/shop/cart']" href="javascrip:void(0)" class="btn btn-solid" [class.disabled]="counter > product.quantity  " (click)="addProductToCartItem(1, product.productId,counter)" >add to cart</a>
+
+                    <a  [routerLink]="['/shop/cart']" href="javascrip:void(0)" class="btn btn-solid" [class.disabled]="counter > product.quantity "  (click)="addProductToCartItem(1, product.productId,counter)" >add to cart</a>
+
                     <a href="javascrip:void(0)" class="btn btn-solid" [class.disabled]="counter > product.quantity" (click)="buyNow(product)">buy now</a>
 
                   </div>

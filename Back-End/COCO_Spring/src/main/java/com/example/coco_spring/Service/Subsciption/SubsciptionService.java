@@ -98,16 +98,31 @@ public class SubsciptionService {
     public Product getPrize(Long subId){
         Subscription subscription = subscripttionRepository.findById(subId).get();
         float priceMax=subscription.getProduct().getPrice();
+        int subbedMonths=subscription.getSubMonths();
         Map<ProductCategory,List<Product>> top10RatedProductByCategory=this.top10RatedProductByCategory();
-        List<Product> prizes = top10RatedProductByCategory.get(ProductCategory.electronics)
-                .stream()
-                .filter(p -> p.getPrice() > 0 && p.getPrice() < priceMax*0.2)
-                .toList();
-        System.out.println(prizes);
-        Random rand = new Random();
-       Product prize=prizes.get(rand.nextInt(prizes.size()));
-       subscription.setPrize(prize);
-       subscripttionRepository.save(subscription);
-        return prize;
+        if(subbedMonths == 6){
+            List<Product> prizes = productRepository.findAll()
+                    .stream()
+                    .filter(p -> p.getPrice() > 0 && p.getPrice() < priceMax*0.15 && p.getProductCategory()==subscription.getProduct().getProductCategory())
+                    .toList();
+            System.out.println(prizes);
+            Random rand = new Random();
+            Product prize=prizes.get(rand.nextInt(prizes.size()));
+            subscription.setPrize(prize);
+            subscripttionRepository.save(subscription);
+            return prize;
+        }
+        else{
+            List<Product> prizes = productRepository.findAll()
+                    .stream()
+                    .filter(p -> p.getPrice() > 0 && p.getPrice() < priceMax*0.05 && p.getProductCategory()==subscription.getProduct().getProductCategory())
+                    .toList();
+            System.out.println(prizes);
+            Random rand = new Random();
+            Product prize=prizes.get(rand.nextInt(prizes.size()));
+            subscription.setPrize(prize);
+            subscripttionRepository.save(subscription);
+            return prize;
+        }
     }
 }

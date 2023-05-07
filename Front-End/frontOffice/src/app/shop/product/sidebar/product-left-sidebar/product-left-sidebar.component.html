@@ -97,7 +97,8 @@
                     <a href="javascrip:void(0)" class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="buyNow(product)">buy now</a>
 
                   </div>
-                  <div class="product-buttons">
+
+                  <div *ngIf="subsciption == null" class="product-buttons">
                     <a href="javascrip:void(0)" class="btn btn-solid" (click)="openDialog()">Subscribe Now!</a>
                   </div>
                   <div class="border-product">
@@ -199,7 +200,7 @@
                     <div class="media-body">
                       <h6>{{review.user?.name}}  {{review.user?.lastName}}<span>( {{ review.createdAt | date: 'yyyy-MM-dd' }} )</span></h6>
                       <bar-rating [rate]="review.rating" [readOnly]="true"></bar-rating>
-                      <h3>{{review.reviewText}}</h3>
+                      <h3>{{review.reviewTitle}}</h3>
                       <p>{{review.reviewText}}</p>
                       <ul class="comnt-sec">
                         <li><a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span>(14)</span></a></li>

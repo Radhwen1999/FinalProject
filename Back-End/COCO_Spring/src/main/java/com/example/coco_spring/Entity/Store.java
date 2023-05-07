@@ -25,6 +25,8 @@ public class Store implements Serializable {
     private Long storeId;
     private  String storeName ;
     private Integer contactInformation ;
+    @Lob
+    @Column( length = 1000000)
     private String storeDescription ;
     @Enumerated(EnumType.STRING)
     private Category category ;

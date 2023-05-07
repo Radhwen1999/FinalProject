@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,5 +30,8 @@ public class Review {
     @ManyToOne
     @JsonIgnore
     Product product;
+    @JsonIgnore
+    @OneToMany(mappedBy = "review")
+    List<LikeDislikeProduct> likeDislikeProducts;
 
 }

@@ -5,7 +5,8 @@ import {ImageProceesingsService} from '../../img/image-proceesings.service';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Store} from '../../../models/store';
+import {Store} from "../../../classes/store";
+
 
 @Injectable({
   providedIn: 'root'

@@ -45,8 +45,12 @@ export class ShopCollectionComponent implements OnInit{
   ngOnInit(): void {
     this.getAllStores();
   }
-  showStoreDetails(storeId) {
-    this.rr.navigate(['/shop/collection/post/store', {storeId}]);
+
+  showPostes(storeID) {
+    this.rr.navigate(['/shop/collection/post-store', {storeId: storeID}]);
+  }
+  showStoreDetails(storeID) {
+    this.rr.navigate(['/shop/collection/post-store', {storeId: storeID}]);
   }
   public getAllStores(){
     this.storeservice.getAllStores()
@@ -59,44 +63,8 @@ export class ShopCollectionComponent implements OnInit{
         );
   }
 
-  // SortBy Filter
-  sortByFilter(value) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { sortBy: value ? value : null},
-      queryParamsHandling: 'merge', // preserve the existing query params in the route
-      skipLocationChange: false  // do trigger navigation
-    }).finally(() => {
-      this.viewScroller.scrollToAnchor('products'); // Anchore Link
-    });
-  }
 
-  // product Pagination
-  setPage(page: number) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { page },
-      queryParamsHandling: 'merge', // preserve the existing query params in the route
-      skipLocationChange: false  // do trigger navigation
-    }).finally(() => {
-      this.viewScroller.scrollToAnchor('products'); // Anchore Link
-    });
-  }
 
-  // Change Grid Layout
-  updateGridLayout(value: string) {
-    this.grid = value;
-  }
 
-  // Change Layout View
-  updateLayoutView(value: string) {
-    this.layoutView = value;
-    if (value == 'list-view') {
-      this.grid = 'col-lg-12';
-    }
-    else {
-      this.grid = 'col-xl-3 col-md-6';
-    }
-  }
 
 }

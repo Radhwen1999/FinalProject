@@ -8,7 +8,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProductService} from "../../../../services/product/product.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ImageProcessingService} from "../../../../services/image-processing.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Store} from "../../../../models/store";
+import {StoreService} from "../../../../services/store/store.service";
 
 @Component({
   selector: 'app-product-list',
@@ -19,15 +21,19 @@ export class ProductListComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name
   public product_list: Product[] = [];
+  public productByStore: Product[] = [];
+  public store: Store = new Store();
 
   constructor(public service: TableService, private modalService: NgbModal, private productService: ProductService, private imagediag: MatDialog,
-              private  imageProcessingService: ImageProcessingService, private route: Router) {
+              private  imageProcessingService: ImageProcessingService, private route: Router, private activatedRoute: ActivatedRoute, private storeService: StoreService) {
     //this.product_list = productDB.product;
   }
 
   ngOnInit() {
     this.getAllProducts();
-
+    this.store = this.activatedRoute.snapshot.data.store ;
+    this.getPrductsByStore();
+    console.log(this.store);
   }
   public getAllProducts(){
     this.productService.getAllProducts()
@@ -57,6 +63,16 @@ export class ProductListComponent implements OnInit {
   }
   public editProductDetails(productID) {
     this.route.navigate(['/products/physical/add-product', {productId: productID}]);
+  }
+  public getPrductsByStore(){
+      if (this.store.storeId > 0){
+          this.storeService.getProductsByStore(this.store.storeId).pipe(
+              map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+          )
+              .subscribe((resp) => {
+              this.productByStore = resp;
+          });
+      }
   }
   showProductDetails(productID) {
     this.route.navigate(['/products/physical/product-detail', {productId: productID}]);

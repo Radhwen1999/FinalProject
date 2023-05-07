@@ -16,10 +16,11 @@ import { AllStoresComponent } from './all-stores/all-stores.component';
 import { CreateStorecatalogComponent } from './create-storecatalog/create-storecatalog.component';
 import { ListCatlComponent } from './list-catl/list-catl.component';
 import {AddPostComponent} from "./add-post/add-post.component";
+import {CatalogDetailComponent} from "./catalog-detail/catalog-detail.component";
 // import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
-  declarations: [ListVendorsComponent, CreateVendorsComponent, StoreDetailComponent, AllStoresComponent, CreateStorecatalogComponent, ListCatlComponent, AddPostComponent],
+  declarations: [ListVendorsComponent, CreateVendorsComponent, StoreDetailComponent, AllStoresComponent, CreateStorecatalogComponent, ListCatlComponent, AddPostComponent, CatalogDetailComponent],
 
     imports: [
         CommonModule,

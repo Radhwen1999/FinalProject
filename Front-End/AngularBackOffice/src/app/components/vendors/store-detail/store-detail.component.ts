@@ -72,4 +72,8 @@ export class StoreDetailComponent implements OnInit{
     });
   }
 
+  showAffect(storeId) {
+    this.route.navigate(['/vendors/create-storecatalog', {storeId}]);
+  }
+
 }

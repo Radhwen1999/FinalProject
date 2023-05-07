@@ -2,16 +2,18 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {StoreCatalog} from '../../models/storeCatalog';
 import {HttpClient} from '@angular/common/http';
+import {Store} from '../../models/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogServiceService {
-  readonly ADD_CATALOG = 'http://localhost:9090/kaddem/StoreCatalog/addStoreCatalog';
-  readonly GET_ALL_CATALOG = 'http://localhost:9090/kaddem/StoreCatalog/get_all_StoreCatalog';
-  readonly DELETE_CATALOG = 'http://localhost:9090/kaddem/StoreCatalog/deleteStoreCatalog/';
-  readonly FIND_BY_ID = 'http://localhost:9090/kaddem/StoreCatalog/getById_StoreCatalog/';
-
+  readonly ADD_CATALOG = 'http://localhost:9092/COCO/api/storecatalog/addStoreCatalog';
+  readonly GET_ALL_CATALOG = 'http://localhost:9092/COCO/api/storecatalog/get_all_StoreCatalog';
+  readonly DELETE_CATALOG = 'http://localhost:9092/COCO/api/storecatalog/deleteStoreCatalog/';
+  readonly FIND_BY_ID = 'http://localhost:9092/COCO/api/storecatalog/getById_StoreCatalog/';
+  readonly FIND_CATALOG_STORE = 'http://localhost:9092/COCO/api/storecatalog/findStoreId/';
+  apiUrl = 'http://localhost:9092/COCO/api/storecatalog';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -35,5 +37,13 @@ export class CatalogServiceService {
 
   getCatalogDetails(catalogId){
     return this.httpClient.get<StoreCatalog>(this.FIND_BY_ID + catalogId);
+  }
+  getCatalogStoreId(catalogId){
+    return this.httpClient.get<StoreCatalog>(this.FIND_CATALOG_STORE + catalogId);
+  }
+
+  addCatalogStore(storeId: number, catalogId: number ): Observable<void> {
+    const url = `${this.apiUrl}/affecterStoreCatalogAStore/${storeId}/${catalogId}`;
+    return this.httpClient.post<void>(url, null);
   }
 }

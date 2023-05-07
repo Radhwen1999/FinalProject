@@ -1,9 +1,9 @@
-/// <reference types="@types/googlemaps" />
+
 declare global {
     function initMap(): void;
 }
 
-export function initMap(): void {
+export function initMap(): void {/*
 
     let mapInstance: google.maps.Map;
     navigator.geolocation.getCurrentPosition((position) => {
@@ -84,7 +84,7 @@ export function initMap(): void {
                     }
                 });
         }
-    });
+    }); */
 }
 
 window.initMap = initMap;

@@ -6,7 +6,10 @@ import com.example.coco_spring.Repository.*;
 import com.example.coco_spring.Service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.mail.javamail.JavaMailSender;
 
 
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ public class StoreCatalogService implements ICRUDService<StoreCatalog,Long>,ISto
 
     UserDataLoadRepo userDataLoadRepo;
     CategoryAdverRepo categoryAdverRepo;
+    @Autowired
+    private JavaMailSender mailSender;
 
 
 
@@ -68,7 +73,18 @@ public class StoreCatalogService implements ICRUDService<StoreCatalog,Long>,ISto
         return storeCatalogRepository.save(newCatalog);
     }
 
+    @Override
+    public void sendEmail(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("coco.market.pi@gmail.com");
+        message.setTo(toEmail);
+        message.setText(body);
+        message.setSubject(subject);
 
+        mailSender.send(message);
+        System.out.println("succ");
+
+    }
 
 
     @Override
@@ -82,10 +98,12 @@ public class StoreCatalogService implements ICRUDService<StoreCatalog,Long>,ISto
     }
 
     @Override
-    public void affecterStoreCatalogAStore(Long catalogId, Long storeId) {
-        StoreCatalog storeCatalog =storeCatalogRepository.findById(catalogId).get();
+    public void affecterStoreCatalogAStore(Long storeId,Long catalogId) {
         Store store=storeRepository.findById(storeId).get();
-        store.setStoreCatalog(storeCatalog);
+
+        StoreCatalog storeCatalog =storeCatalogRepository.findById(catalogId).get();
+
+        store.getStoreCatalog().add(storeCatalog);
         storeRepository.save(store);
     }
 

@@ -8,7 +8,7 @@ import {ProductResolverService} from "./services/product-resolver/product-resolv
 import {ProductsModule} from "./components/products/products.module";
 import {DigitalAddComponent} from "./components/products/digital/digital-add/digital-add.component";
 import {CreateStorecatalogComponent} from "./components/vendors/create-storecatalog/create-storecatalog.component";
-import {StrCtlgResolverService} from "./services/store-catalog/str-ctlg-resolver.service";
+import {StrCtlgResolverService} from './services/store-catalog/str-ctlg-resolver.service';
 
 import {CreateVendorsComponent} from "./components/vendors/create-vendors/create-vendors.component";
 import {StoreResolverService} from "./services/store-resolver/store-resolver.service";
@@ -18,6 +18,7 @@ import {AddOrderComponent} from "./components/sales/orders/add-order/add-order.c
 import {resolve} from "@angular/compiler-cli";
 import {OrderResolverServiceService} from "./services/order-resolver/order-resolver-service.service";
 import {MapComponent} from "./components/map/map.component";
+import {CatalogDetailComponent} from "./components/vendors/catalog-detail/catalog-detail.component";
 
 
 
@@ -75,6 +76,15 @@ const routes: Routes = [
     path: '',
     component: ContentLayoutComponent,
     children: [
+      {path: 'vendors/catalog-detail' , component: CatalogDetailComponent,  resolve : {
+          store: StrCtlgResolverService
+        }}
+    ],
+  },
+  {
+    path: '',
+    component: ContentLayoutComponent,
+    children: [
       {path: 'vendors/create-vendors' , component: CreateVendorsComponent, resolve : {
           store: StoreResolverService
         }  }
@@ -85,7 +95,7 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {path: 'vendors/create-storecatalog' , component: CreateStorecatalogComponent, resolve : {
-          catalog: StrCtlgResolverService
+          catalog: StrCtlgResolverService, store: StoreResolverService
         }  }
     ],
   },

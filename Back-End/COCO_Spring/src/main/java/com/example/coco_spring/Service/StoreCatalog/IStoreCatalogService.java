@@ -18,5 +18,7 @@ public interface IStoreCatalogService {
 
     public  StoreCatalog add1(String catalogName, String catalogDescription, Date date);
 
+    public void sendEmail(String toEmail,String subject, String body);
+
 
 }

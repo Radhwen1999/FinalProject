@@ -48,9 +48,8 @@ public class Store implements Serializable {
     private String storeLocations;
 
 
-    @JsonIgnore
-    @OneToOne
-    private StoreCatalog storeCatalog;
+    @ManyToMany
+    List<StoreCatalog>  storeCatalog;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)

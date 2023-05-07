@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 // import { NgxPayPalModule } from 'ngx-paypal';
 import { Ng5SliderModule } from 'ng5-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -103,6 +104,7 @@ import { ShopCollectionComponent } from './shop-collection/shop-collection.compo
         NgxStarRatingModule,
         PagesModule,
         MatButtonModule,
+        FormsModule,
         MatDialogModule
     ]
 })

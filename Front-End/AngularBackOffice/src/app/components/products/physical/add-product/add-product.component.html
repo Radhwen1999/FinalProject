@@ -107,8 +107,15 @@
                 </div>
                   <div class="col-sm-8 offset-xl-3 offset-sm-4">
                     <div class="product-buttons">
+                      <div *ngIf="store.storeId==null">
                         <button type="submit" (click)="onSubmit()" class="btn btn-primary me-1">Add</button>
-                        <button type="button" class="btn btn-light">Discard</button>
+                      </div>
+
+                      <div *ngIf="store.storeId > 0">
+                        <button (click)="addProductToStore()" type="submit" class="btn btn-primary me-1">Affect To Store</button>
+                      </div>
+
+                      <button type="button" class="btn btn-light">Discard</button>
                       </div>
                   </div>
               </div>

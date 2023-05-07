@@ -14,6 +14,8 @@ import {ProductService} from "../../../../services/product/product.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
 import {Product} from "../../../../models/product";
+import {Store} from "../../../../models/store";
+import {StoreService} from "../../../../services/store/store.service";
 
 
 @Component({
@@ -25,7 +27,8 @@ export class AddProductComponent implements OnInit {
 
 
 
-  constructor(private fb: UntypedFormBuilder, private productService: ProductService, private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: UntypedFormBuilder, private productService: ProductService, private sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute,
+              private storeService: StoreService) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required]],
       desc: ['', [Validators.required]],
@@ -40,6 +43,8 @@ export class AddProductComponent implements OnInit {
   public counter = 1;
   files: File[] = [];
   array: FileHandle[] = [];
+  store: Store = new Store();
+    public  a: number ;
     selectedItems: string[] = ['all products'];
  public product: Product = new Product() ;
   //FileUpload
@@ -72,6 +77,7 @@ export class AddProductComponent implements OnInit {
     }
     onSubmit() {
         this.product.productCategory = 'fashion';
+        this.product.collection = this.selectedItems;
         const productFormData = this.prepareFormData(this.product);
         this.productService.addProduct(productFormData).subscribe(
             (product: Product) => {
@@ -156,8 +162,26 @@ export class AddProductComponent implements OnInit {
     console.log(event);
     this.array.splice(this.array.indexOf(event), 1);
   }
+    addProductToStore(): void {
+        this.product.productCategory = 'fashion';
+        this.product.collection = this.selectedItems;
+        const productFormData = this.prepareFormData(this.product);
+        this.productService.addProduct(productFormData).subscribe(
+            (product: Product) => {
+                console.log('Product added successfully', product);
+                this.a = product.productId ;
+                this.storeService.addProductStore(this.store.storeId, product.productId).subscribe(resp => console.log('affected succ '));
+                // Reset the form
+                this.product = new Product();
+            },
+            (error) => {
+                console.error('Failed to add product', error);
+            }
+        );
+    }
   ngOnInit() {
       this.product = this.activatedRoute.snapshot.data.product; console.log(this.product);
+      this.store = this.activatedRoute.snapshot.data.store ;
   }
 
 }

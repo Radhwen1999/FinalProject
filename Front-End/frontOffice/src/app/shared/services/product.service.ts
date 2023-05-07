@@ -8,8 +8,11 @@ import {ImageProcessingService} from './image-processing.service';
 import {Review} from '../classes/review';
 import {User} from '../models/User';
 import {AuthService} from './auth.service';
-import {Subscription} from "../classes/subscription";
-import {types} from "sass";
+import {Subscription} from '../classes/subscription';
+import {types} from 'sass';
+import { Order1 } from '../classes/order1';
+import {CartItem} from '../classes/CartItem';
+import {SmsPojo} from '../classes/SmsPojo';
 import List = types.List;
 
 const state = {
@@ -36,6 +39,8 @@ export class ProductService {
   readonly GET_ALL_REVIEWS = 'http://localhost:9092/COCO/api/review/getallreviews/';
   readonly DISLIKE_PRODUCT = 'http://localhost:9092/COCO/api/review';
   readonly LIKE_PRODUCT = 'http://localhost:9092/COCO/api/review';
+  readonly DISLIKE_REVIEW = 'http://localhost:9092/COCO/api/review';
+  readonly LIKE_REVIEW = 'http://localhost:9092/COCO/api/review';
   readonly VERIFY_LIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly VERIFY_DISLIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly GET_AVERAGE_LIKES_OF_PRODUCT = 'http://localhost:9092/COCO/api/product/getaveragelikesofproduct/';
@@ -48,6 +53,35 @@ export class ProductService {
   readonly GET_TOP_FIVE_MOST_LIKED_PRODUCTS = 'http://localhost:9092/COCO/api/product/topfivemostlikedproducts';
   readonly GET_SOLDE = 'http://localhost:9092/COCO/api/product/insuranceprice/';
   readonly GET_PREMIUM_PRODUCTS = 'http://localhost:9092/COCO/api/product/premiumproducts';
+  readonly GET_NUMBER_OF_LIKES_OF_REVIEW = 'http://localhost:9092/COCO/api/product/getnumberoflikesrev/';
+  readonly GET_NUMBER_OF_DISLIKES_OF_REVIEW = 'http://localhost:9092/COCO/api/product/getnumberofdislikesrev/';
+
+  //////////////////////////////////////////////////////////////////////
+
+  readonly CARTITEM = 'http://localhost:9092/COCO/api/cart/cartItem';
+  readonly GET_CART_ITEM_WITH_PRODUCTS = 'http://localhost:9092/COCO/api/cart/getCartItemsWithProducts';
+  readonly DELETE_CARTITEM = 'http://localhost:9092/COCO/api/cart/delete_cartItem/';
+
+  readonly GET_CART_INDEX = 'http://localhost:9092/COCO/api/cart/getindexCart';
+
+
+  /////////////////////////////////////////////////////////////////////////
+
+  readonly ADD_ORDERS = 'http://localhost:9092/COCO/api/order1/add_order';
+  readonly UPDATE_ORDERS = 'http://localhost:9092/COCO/api/order/update_order';
+  readonly GETALL_ORDERS = 'http://localhost:9092/COCO/api/order/retrive_all_orders';
+  readonly DELETE_ORDERS = 'http://localhost:9092/COCO/api/order/delete_order/';
+  readonly GET_ORDER_DETAILS_API_URL = 'http://localhost:9092/COCO/api/order/retrive_order/';
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  // /           SMS
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
+  readonly SMS = 'http://localhost:9092/COCO/api/payement/sms/SubmitSms';
+  readonly GET_ALL_PRODUCTS_API_URLL = 'http://localhost:8089/radhwen/api/product/getallproducts';
+
+  ///////////////////////////////////////////////////////////////////////////////////
   currentUser: User = new User();
   public id ;
 
@@ -65,6 +99,88 @@ export class ProductService {
     ---------------  Product  -------------------
     ---------------------------------------------
   */
+
+  sms(smsPojo: SmsPojo){
+    const url = `http://localhost:9092/COCO/api/payement/sms/SubmitSms`;
+    return this.http.post<SmsPojo>(url, smsPojo);
+  }
+  /////////////////////////////////////////////////////
+
+  addOrder(order1: Order1): Observable<any> {
+    // debugger
+    return this.httpClient.post(this.ADD_ORDERS, order1);
+  }
+
+  getAllOrders(){
+    return this.httpClient.get<Order1[]>(this.GETALL_ORDERS);
+  }
+  deleteOrder(orderId: number){
+    return this.httpClient.delete(this.DELETE_ORDERS + orderId);
+  }
+  updateOrder(order1: FormData): Observable<any>{
+    return this.httpClient.put(this.UPDATE_ORDERS, order1);
+  }
+
+  updateeOrder(order1Id: number): Observable<any>{
+    return this.httpClient.put(this.UPDATE_ORDERS, order1Id);
+  }
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+  getOrderDetails(orderId){
+    return this.httpClient.get<Order1>(this.GET_ORDER_DETAILS_API_URL + orderId);
+  }
+
+  public getCartItemsWithProducts(cartId: number): Observable<CartItem[]> {
+    return this.httpClient.get<CartItem[]>(`${this.GET_CART_ITEM_WITH_PRODUCTS}/${cartId}`);
+  }
+
+  getProduct(productId: number): Observable<Product> {
+    const url = `http://localhost:9092/COCO/api/product/getproductdetails/${productId}`;
+    return this.httpClient.get<Product>(url);
+  }
+
+  CartgetAllProducts(){
+    return this.httpClient.get<Product[]>(this.GET_ALL_PRODUCTS_API_URLL);
+  }
+
+
+  public getCartIndex(){
+    return this.httpClient.get<number>(this.GET_CART_INDEX);
+  }
+
+  public addProductToCartItem(cartId, productId, quantity){
+    const url = `${this.CARTITEM}/${cartId}/${productId}/${quantity}`;
+    return this.httpClient.post(url, null);
+  }
+
+
+
+  public getCartDetails(){
+    return this.httpClient.get('http://localhost:9092/COCO/api/cart/getCartDetails');
+  }
+
+  public removeCartItemm(id: number) {
+    return this.httpClient.delete(this.DELETE_CARTITEM + id);
+  }
+
+  public getCartTotalAmount(cartItems: CartItem[]): number {
+    let totalAmount = 0;
+    for (const cartItem of cartItems) {
+      let price = cartItem.product.price;
+      if (cartItem.product.discount) {
+        price = cartItem.product.price - (cartItem.product.price * cartItem.product.discount / 100);
+      }
+      totalAmount += price * cartItem.product.quantity;
+    }
+    return totalAmount;
+  }
+
+
+
+  //////////////////////////////////////////////////////////
 
 
   // Product
@@ -116,6 +232,12 @@ export class ProductService {
     );
 
   }
+  getNumberOfLikesOfReview(reviewId: number): Observable<number>{
+    return this.httpClient.get<number>(this.GET_NUMBER_OF_LIKES_OF_REVIEW + reviewId);
+  }
+  getNumberOfDislikesOfReview(reviewId: number): Observable<number>{
+    return this.httpClient.get<number>(this.GET_NUMBER_OF_DISLIKES_OF_REVIEW + reviewId);
+  }
 
   // Get Products By Slug
   public getProductBySlug(slug: string): Observable<Product> {
@@ -143,6 +265,9 @@ export class ProductService {
   public likeProduct(productId){
     return this.httpClient.post(this.LIKE_PRODUCT + '/' + this.id + '/like/' + productId , {});
   }
+  public likeReview(reviewId){
+    return this.httpClient.post(this.LIKE_REVIEW + '/' + this.id + '/likerev/' + reviewId , {});
+  }
   public verifyLikeProduct(productId): Observable<boolean>{
     return this.httpClient.get<boolean>(this.VERIFY_LIKE_PRODUCT + '/verifyifliked/' + this.id + '/' + productId );
   }
@@ -161,6 +286,9 @@ export class ProductService {
     return this.httpClient.get<boolean>(this.VERIFY_DISLIKE_PRODUCT + '/verifyifdisliked/' + this.id + '/' + productId); }
   public disLikeProduct(productId){
     return this.httpClient.post(this.DISLIKE_PRODUCT + this.id + '/dislike/' + productId , {});
+  }
+  public dislikeReview(reviewId){
+    return this.httpClient.post(this.DISLIKE_REVIEW + this.id + '/dislikerev/' + reviewId , {});
   }
   public getAverageLikesOfProduct(productId){
     return this.httpClient.get<number>(this.GET_AVERAGE_LIKES_OF_PRODUCT + productId);

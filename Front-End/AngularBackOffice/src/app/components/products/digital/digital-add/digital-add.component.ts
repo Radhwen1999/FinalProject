@@ -96,6 +96,8 @@ export class DigitalAddComponent implements OnInit {
     this.array = [];
   }
   addProductToStore(): void {
+    this.product.productCategory = 'electronics';
+    this.product.collection = this.selectedItems;
     const productFormData = this.prepareFormData(this.product);
     this.productService.addProduct(productFormData).subscribe(
         (product: Product) => {

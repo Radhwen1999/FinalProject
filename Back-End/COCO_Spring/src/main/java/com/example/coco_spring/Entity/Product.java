@@ -21,7 +21,7 @@ public class Product {
     private String reference;
     private String title;
     @Lob
-    @Column( length = 10000)
+    @Column( length = 100000)
     private String description;
     private Long quantity;
     private String model;

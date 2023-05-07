@@ -12,7 +12,7 @@ import com.example.coco_spring.Repository.*;
 import com.example.coco_spring.Service.*;
 import lombok.AllArgsConstructor;
 
-
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/payement/")

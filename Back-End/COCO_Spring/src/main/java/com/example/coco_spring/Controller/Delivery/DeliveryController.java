@@ -10,6 +10,7 @@ import com.example.coco_spring.Entity.StoreLocations;
 import com.example.coco_spring.Repository.DeliveryRepository;
 import com.example.coco_spring.Service.Delivery.DeliveryService;
 import com.example.coco_spring.Service.Delivery.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/delivery/")
+@CrossOrigin("*")
+
 public class DeliveryController {
-    private final DeliveryService deliveryService;
-    private final DeliveryRepository deliveryRepository;
+    @Autowired
 
-    private final LocationService locationService;
-
-    public DeliveryController(DeliveryService deliveryService,
-                              DeliveryRepository deliveryRepository,LocationService locationService)  {
-        this.deliveryService = deliveryService;
-        this.deliveryRepository = deliveryRepository;
-        this.locationService = locationService;
+    DeliveryService deliveryService;
+    @PostMapping("/add_delivery/{lat}/{lng}")
+    public Delivery addDelivery(@RequestBody Delivery delivery,@PathVariable("lat") double lat,@PathVariable("lng") double lng ){
+        return deliveryService.addjjj(delivery,lat,lng);
     }
 
     @GetMapping("/retrive_all_deliveries")
@@ -35,6 +34,7 @@ public class DeliveryController {
 
         return deliveryService.findAll();
     }
+
 
     @GetMapping("/retrive_delivery/{deliveryId}")
     public Delivery retrieveDelivery(@PathVariable("deliveryId") Long deliveryId){
@@ -71,11 +71,7 @@ public class DeliveryController {
 
     }
 
-    @PostMapping("/dispatch/{userId}/{deliveryId}")
-    public Provider dispatchDeliveryToNearestDeliveryman(@PathVariable("userId")Long userId,@PathVariable("deliveryId") Long deliveryId) {
-        Delivery delivery = deliveryService.dispatchDeliveryToNearestDeliveryman(userId,deliveryId);
-        return delivery.getProvider();
-    }
+
     @PutMapping("/cancelDelivery/{id}")
     public Delivery cancelDelivery(@PathVariable Long id) {
        return deliveryService.cancelDelivery(id);
@@ -90,9 +86,16 @@ public class DeliveryController {
     public  Delivery changeStatusToProg(@PathVariable("id")Long id){
       return   deliveryService.changeStatusToProg(id);
     }
+
     @PutMapping("/changeStatusToDelivered/{id}")
     public  Delivery changeStatusToDelivered(@PathVariable("id")Long id){
         return   deliveryService.changeStatusToDelivered(id);
+    }
+
+    @PostMapping("/dispatch/{deliveryId}")
+    public Provider dispatchDeliveryToNearestDeliveryman(@PathVariable("deliveryId") Long deliveryId) {
+        Delivery delivery = deliveryService.dispatchDeliveryToNearestDeliveryman(deliveryId);
+        return delivery.getProvider();
     }
 
 }

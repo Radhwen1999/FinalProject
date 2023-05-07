@@ -11,22 +11,22 @@ import {AuthService} from '../auth.service';
   providedIn: 'root'
 })
 
-  export class OrderService extends RequestBaseService{
-  readonly ADD_ORDERS = 'http://165.227.171.67:9092/COCO/api/order/add_order';
+  export class OrderService {
+  readonly ADD_ORDERS = 'http://localhost:9092/COCO/api/order/add_order';
   // readonly ADD_ORDERS = 'http://localhost:9092/COCO/api/order/add_order';
 
-  readonly UPDATE_ORDERS = 'http://165.227.171.67:9092/COCO/api/order/update_order';
-  readonly GETALL_ORDERS = 'http://165.227.171.67:9092/COCO/api/order/retrive_all_orders';
-  readonly DELETE_ORDERS = 'http://165.227.171.67:9092/COCO/api/order/delete_order/';
-  readonly GET_ORDER_DETAILS_API_URL = 'http://165.227.171.67:9092/COCO/api/order/retrive_order/';
+  readonly UPDATE_ORDERS = 'http://localhost:9092/COCO/api/order/update_order';
+  readonly GETALL_ORDERS = 'http://localhost:9092/COCO/api/order/retrive_all_orders';
+  readonly DELETE_ORDERS = 'http://localhost:9092/COCO/api/order/delete_order/';
+  readonly GET_ORDER_DETAILS_API_URL = 'http://localhost:9092/COCO/api/order/retrive_order/';
 
   constructor(private httpClient: HttpClient,private auth:AuthService) {
-	  super(auth,httpClient);
+
   }
 
   addOrder(order: Order): Observable<any> {
 	  // debugger
-    return this.httpClient.post(this.ADD_ORDERS, order,{headers: this.getHeaders});
+    return this.httpClient.post(this.ADD_ORDERS, order);
   }
 
 

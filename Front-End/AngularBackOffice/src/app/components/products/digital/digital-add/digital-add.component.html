@@ -95,9 +95,14 @@
 
                             <div class="form-group mb-0">
                                 <div class="product-buttons text-end mt-3">
-                                    <button type="submit" class="btn btn-primary">Confirm Add</button>
+                                    <div *ngIf="store.storeId==null">
+                                        <button type="submit" class="btn btn-primary me-1">Add</button>
+                                    </div>
                                     <button type="button" class="btn btn-light">Discard</button>
-                                    <button (click)="addProductToStore()" type="submit" class="btn btn-light">Affect To Store</button>
+                                    <div *ngIf="store.storeId > 0">
+                                        <button (click)="addProductToStore()" type="submit" class="btn btn-primary me-1">Affect To Store</button>
+                                    </div>
+
 
                                 </div>
                             </div>

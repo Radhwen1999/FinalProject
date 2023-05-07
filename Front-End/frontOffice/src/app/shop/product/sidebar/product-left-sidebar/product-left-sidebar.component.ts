@@ -92,9 +92,7 @@ export class ProductLeftSidebarComponent implements OnInit {
      console.log(this.getUSDate);
    }
   }
-  public getsub(){
-    
-  }
+
   refresh(product){
    this.product = product;
   }

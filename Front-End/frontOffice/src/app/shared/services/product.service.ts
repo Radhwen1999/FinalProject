@@ -36,6 +36,8 @@ export class ProductService {
   readonly GET_ALL_REVIEWS = 'http://localhost:9092/COCO/api/review/getallreviews/';
   readonly DISLIKE_PRODUCT = 'http://localhost:9092/COCO/api/review';
   readonly LIKE_PRODUCT = 'http://localhost:9092/COCO/api/review';
+  readonly DISLIKE_REVIEW = 'http://localhost:9092/COCO/api/review';
+  readonly LIKE_REVIEW = 'http://localhost:9092/COCO/api/review';
   readonly VERIFY_LIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly VERIFY_DISLIKE_PRODUCT = 'http://localhost:9092/COCO/api/product';
   readonly GET_AVERAGE_LIKES_OF_PRODUCT = 'http://localhost:9092/COCO/api/product/getaveragelikesofproduct/';
@@ -48,6 +50,8 @@ export class ProductService {
   readonly GET_TOP_FIVE_MOST_LIKED_PRODUCTS = 'http://localhost:9092/COCO/api/product/topfivemostlikedproducts';
   readonly GET_SOLDE = 'http://localhost:9092/COCO/api/product/insuranceprice/';
   readonly GET_PREMIUM_PRODUCTS = 'http://localhost:9092/COCO/api/product/premiumproducts';
+  readonly GET_NUMBER_OF_LIKES_OF_REVIEW = 'http://localhost:9092/COCO/api/product/getnumberoflikesrev/';
+  readonly GET_NUMBER_OF_DISLIKES_OF_REVIEW = 'http://localhost:9092/COCO/api/product/getnumberofdislikesrev/';
   currentUser: User = new User();
   public id ;
 
@@ -116,6 +120,12 @@ export class ProductService {
     );
 
   }
+  getNumberOfLikesOfReview(reviewId: number): Observable<number>{
+    return this.httpClient.get<number>(this.GET_NUMBER_OF_LIKES_OF_REVIEW + reviewId);
+  }
+  getNumberOfDislikesOfReview(reviewId: number): Observable<number>{
+    return this.httpClient.get<number>(this.GET_NUMBER_OF_DISLIKES_OF_REVIEW + reviewId);
+  }
 
   // Get Products By Slug
   public getProductBySlug(slug: string): Observable<Product> {
@@ -143,6 +153,9 @@ export class ProductService {
   public likeProduct(productId){
     return this.httpClient.post(this.LIKE_PRODUCT + '/' + this.id + '/like/' + productId , {});
   }
+  public likeReview(reviewId){
+    return this.httpClient.post(this.LIKE_REVIEW + '/' + this.id + '/likerev/' + reviewId , {});
+  }
   public verifyLikeProduct(productId): Observable<boolean>{
     return this.httpClient.get<boolean>(this.VERIFY_LIKE_PRODUCT + '/verifyifliked/' + this.id + '/' + productId );
   }
@@ -161,6 +174,9 @@ export class ProductService {
     return this.httpClient.get<boolean>(this.VERIFY_DISLIKE_PRODUCT + '/verifyifdisliked/' + this.id + '/' + productId); }
   public disLikeProduct(productId){
     return this.httpClient.post(this.DISLIKE_PRODUCT + this.id + '/dislike/' + productId , {});
+  }
+  public dislikeReview(reviewId){
+    return this.httpClient.post(this.DISLIKE_REVIEW + this.id + '/dislikerev/' + reviewId , {});
   }
   public getAverageLikesOfProduct(productId){
     return this.httpClient.get<number>(this.GET_AVERAGE_LIKES_OF_PRODUCT + productId);

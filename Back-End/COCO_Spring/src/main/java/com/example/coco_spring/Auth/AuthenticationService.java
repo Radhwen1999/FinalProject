@@ -55,6 +55,31 @@ public class AuthenticationService {
                 .build();
     }
 
+    public AuthenticationResponse registerB(RegisterRequest request) throws MessagingException {
+        Random random = new Random();
+
+        int randomNumber = random.nextInt(90000000) + 10000000;
+
+        var user = User.builder()
+                .username(request.getUsername())
+                .name(request.getFirstname())
+                .lastName(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .roles(request.getRole())
+                .locked(true)
+                .expired(false)
+                .codeActivation(randomNumber)
+                .build();
+        var savedUser = repository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        saveUserToken(savedUser, jwtToken);
+        emailService.sendWelcomeEmailB(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

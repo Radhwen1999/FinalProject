@@ -24,6 +24,11 @@ public class CartService implements ICRUDService<Cart,Long> {
 
     UserRepository userRepository;
 
+
+    public int getindexCart(){
+       return cartItemRepository.findAll().size();
+    }
+
     @Override
     public List<Cart> findAll() {
 

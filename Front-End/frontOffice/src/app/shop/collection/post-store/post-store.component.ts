@@ -64,6 +64,6 @@ export class PostStoreComponent implements OnInit{
     });
   }
   showPostDetails(storeId) {
-    this.rr.navigate(['/shop/collection/post/detail', {storeId}]);
+    this.rr.navigate(['/shop/collection/post-detail', {storeId}]);
   }
 }

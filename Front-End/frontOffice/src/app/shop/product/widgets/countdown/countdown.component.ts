@@ -52,14 +52,14 @@ export class CountdownComponent implements OnInit {
     return seconds;
   }
   get minutes() {
-    return Math.trunc((this.timerdate - this.now) / 60) % 60    ;
+    return Math.trunc((this.timerdate - this.now) / 60) % 60  - 42  ;
 
   }
   get hours() {
-    return Math.trunc((this.timerdate - this.now) / 60 / 60) % 24  ;
+    return Math.trunc((this.timerdate - this.now) / 60 / 60) % 24 - 9 ;
   }
   get days() {
-    return Math.trunc((this.timerdate - this.now) / 60 / 60 / 24)   ;
+    return Math.trunc((this.timerdate - this.now) / 60 / 60 / 24)  -91  ;
   }
 
   timerReachedZero() {

@@ -103,4 +103,19 @@ export class AuthService {
 			{ observe: 'response' } // observe the response to get the status code
 		);
 	}
+
+	/*verifAccount(mail: string, code: number): Observable<string> {
+		const url = `${this.API_URL}verif/${mail}/${code}`;
+		return this.http.post<string>(url, null);
+	}*/
+
+	// tslint:disable-next-line:ban-types
+	verifAccount(mail: string, code: number): Observable<Map<String, String>> {
+		const url = `${this.API_URL}verif/${mail}/${code}`;
+		return this.http.post<{ [key: string]: string }>(url, null).pipe(
+			map(response => new Map(Object.entries(response)))
+		);
+	}
+
+
 }

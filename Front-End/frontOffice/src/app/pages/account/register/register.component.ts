@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   }
 
 	onRegister(): void {
-		this.authService.register(this.rform.username, this.rform.password, this.rform.name, this.rform.lastName, this.rform.email)
+		this.authService.register(this.rform.username, this.rform.name, this.rform.lastName, this.rform.email, this.rform.password)
 			.subscribe(
 				response => {
 					console.log(response);

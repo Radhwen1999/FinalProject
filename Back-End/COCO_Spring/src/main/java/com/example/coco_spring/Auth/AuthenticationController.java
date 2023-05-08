@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.io.IOException;
 
@@ -135,12 +133,26 @@ public class AuthenticationController {
 		return ResponseEntity.ok(service.authenticateViaWeb(request));
 	}
 
-    @PostMapping("/verif/{mail}/{code}")
+    /*@PostMapping("/verif/{mail}/{code}")
     public String verifAccount(@PathVariable("mail") String mail,@PathVariable("code") Integer code){
         return service.verifAccount(mail,code);
+    }*/
+
+    @PostMapping("/verif/{mail}/{code}")
+    public ResponseEntity<Map<String, String>> verifAccount(@PathVariable("mail") String mail,@PathVariable("code") Integer code){
+        Map<String, String> response = new HashMap<>();
+        if (service.verifAccount(mail, code).equals("done")) {
+            response.put("message", "done");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", "Invalid verification code");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
-	@PostMapping("/demResetPassword/{email}")
+
+
+    @PostMapping("/demResetPassword/{email}")
 	public ResponseEntity<?> demResetPassword(@PathVariable("email") String email) throws MessagingException {
 		Optional<User> user = repository.findByEmail(email);
 		if (user.isPresent()) {

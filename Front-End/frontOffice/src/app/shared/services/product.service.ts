@@ -106,7 +106,7 @@ export class ProductService {
   }
   /////////////////////////////////////////////////////
 
-  addOrder(order1: Order1): Observable<any> {
+  addOrder(order1: Order1) {
     // debugger
     return this.httpClient.post(this.ADD_ORDERS, order1);
   }

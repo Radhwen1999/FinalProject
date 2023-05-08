@@ -39,7 +39,7 @@
 
 
 
-<section>
+<section >
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
     <style type="text/css">
@@ -122,6 +122,7 @@
             margin-right: 5px;
         }
     </style>
+
     <table class="order-detail" border="0" cellpadding="0" cellspacing="0" align="left"
            style="width: 100%;    margin-bottom: 50px;">
 
@@ -132,73 +133,24 @@
             <th>QUANTITY</th>
             <th>PRICE </th>
         </tr>
-        <tr>
+        <tr *ngFor="let cartItem of cartItems">
             <td>
-                <img src="../assets/images/email-temp/15.jpg" alt="" width="80">
+                    <div *ngFor="let image of cartItem.product.image" >
+                        <img [src]="image.url" class="img-fluid" height="400px" width="400px" >
+                    </div>
             </td>
             <td valign="top" style="padding-left: 15px;">
-                <h5 style="margin-top: 15px;">Three seater Wood Style sofa for Leavingroom </h5>
+                <h5 style="margin-top: 15px;">{{cartItem.product.description}} </h5>
             </td>
             <td valign="top" style="padding-left: 15px;">
                 <h5 style="font-size: 14px; color:#444;margin-top:15px;    margin-bottom: 0px;">Size :
-                    <span> L</span> </h5>
-                <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY : <span>1</span></h5>
+                    <span>{{cartItem.product.productId}}</span> </h5>
+                <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY : <span>{{cartItem.quantity}}</span></h5>
             </td>
             <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$500</b></h5>
+                <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>{{cartItem.product.price}}</b></h5>
             </td>
         </tr>
-        <tr>
-            <td>
-                <img src="../assets/images/email-temp/16.jpg" alt="" width="80">
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="margin-top: 15px;">Three seater Wood Style sofa for Leavingroom </h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px;    margin-bottom: 0px;">Size :
-                    <span> L</span> </h5>
-                <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY : <span>1</span></h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$500</b></h5>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="../assets/images/email-temp/17.jpg" alt="" width="80">
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="margin-top: 15px;">Three seater Wood Style sofa for Leavingroom </h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px;    margin-bottom: 0px;">Size :
-                    <span> L</span> </h5>
-                <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY : <span>1</span></h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$500</b></h5>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="../assets/images/email-temp/18.jpg" alt="" width="80">
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="margin-top: 15px;">Three seater Wood Style sofa for Leavingroom </h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px;    margin-bottom: 0px;">Size :
-                    <span> L</span> </h5>
-                <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY : <span>1</span></h5>
-            </td>
-            <td valign="top" style="padding-left: 15px;">
-                <h5 style="font-size: 14px; color:#444;margin-top:15px"><b>$500</b></h5>
-            </td>
-        </tr>
-
-
-
 
         <tr>
             <img src="../assets/images/img_1.png" alt=" " height="25" width="240">
@@ -220,8 +172,10 @@
              border-bottom: 1px solid #e6e8eb; letter-spacing: -0.65px; margin-top:0; margin-bottom: 13px;">
                     Your Shipping Address</h5>
                 <p style="text-align: left;font-weight: normal; font-size: 14px; color: #000000;line-height: 21px;
-                margin-top: 0;"> 268 Cambridge Lane New Albany,<br> IN 47150268 Cambridge Lane <br>New Albany, IN
-                    47150</p>
+                margin-top: 0;"> 268 Les Berges du Lac 1
+                     TUNIS
+                    ,<br> IN 1053 près de Movenpick Hotel <br>Tunis, Tunisie
+                    </p>
             </td>
             <td>
                 <img src="../assets/images/img_1.png" alt=" " height="25" width="60">
@@ -231,8 +185,8 @@
              border-bottom: 1px solid #e6e8eb; letter-spacing: -0.65px; margin-top:0; margin-bottom: 13px;">
                     Your Billing Address:</h5>
                 <p style="text-align: left;font-weight: normal; font-size: 14px; color: #000000;line-height: 21px;
-                margin-top: 0;"> 268 Cambridge Lane New Albany,<br> IN 47150268 Cambridge Lane <br>New Albany, IN
-                    47150</p>
+                margin-top: 0;"> 268 Les Berges du Lac 1 TUNIS,<br> IN 1053 près de Movenpick Hotel <br>Tunis, Tunisie
+                </p>
             </td>
             <td>
                 <img src="../assets/images/img_1.png" alt=" " height="25" width="240">
@@ -264,17 +218,17 @@
                         <h4>summery</h4>
                         <ul class="order-detail">
                             <li>order ID: {{ orderDetails.orderId }}</li>
-                            <li>Order Date: October 22, 2021</li>
-                            <li>Order Total: {{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</li>
+                            <li>Order Date:  May 09, 2023</li>
                         </ul>
                     </div>
                     <div class="col-sm-6">
                         <h4>shipping address</h4>
                         <ul class="order-detail">
-                            <li>{{ orderDetails.shippingDetails.address }}</li>
-                            <li>{{ orderDetails.shippingDetails.state }}</li>
-                            <li>{{ orderDetails.shippingDetails.country }}, {{ orderDetails.shippingDetails.postalcode }}</li>
-                            <li>Contact No. {{ orderDetails.shippingDetails.phone }}</li>
+                            <li>268 Les Berges du Lac 1 TUNIS ,
+                                IN 1053 près de Movenpick Hotel
+                                Tunis, Tunisie</li>
+
+                            <li>Contact No. +216 28 564 201</li>
                         </ul>
                     </div>
 
@@ -285,7 +239,7 @@
                     <div class="col-md-12">
                         <div class="delivery-sec">
                             <h3>expected date of delivery</h3>
-                            <h2>March 21, 2021</h2>
+                            <h2>May 11, 2023</h2>
                         </div>
                     </div>
                 </div>
@@ -319,13 +273,13 @@
                     </div>
                     <div class="total-sec">
                         <ul>
-                            <li>Subtotal <span>{{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</span></li>
-                            <li>Shipping <span>$00.00</span></li>
-                            <li>Tax <span>$00.00</span></li>
+                            <li>Discount  <span>10 %</span></li>
+                            <li>Shipping <span>{{ 7 | currency:productService?.Currency.currency:'symbol' }}</span></li>
+                            <li>Tax <span>19 %</span></li>
                         </ul>
                     </div>
                     <div class="final-total">
-                        <h3>total <span>{{ orderDetails.totalAmount | currency:productService?.Currency.currency:'symbol' }}</span></h3>
+                        <h3>total <span>{{ getTotal  | currency:productService?.Currency.currency:'symbol'}}</span></h3>
                     </div>
                 </div>
             </div>

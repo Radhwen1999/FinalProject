@@ -15,34 +15,38 @@ export class CatalogServiceService {
   readonly FIND_CATALOG_STORE = 'http://localhost:9092/COCO/api/storecatalog/findStoreId/';
   apiUrl = 'http://localhost:9092/COCO/api/storecatalog';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   addCatalog(catalog: FormData): Observable<any> {
     return this.httpClient.post(this.ADD_CATALOG, catalog);
   }
+
   getAllCatalog() {
     return this.httpClient.get<StoreCatalog[]>(this.GET_ALL_CATALOG);
   }
-  deleteCatalog(id: number){
+
+  deleteCatalog(id: number) {
     return this.httpClient.delete(this.DELETE_CATALOG + id);
   }
 
-  editCatalog(id){
+  editCatalog(id) {
     return this.httpClient.get<StoreCatalog>(this.FIND_BY_ID + id);
   }
 
-  getCurrentCatalog(id){
+  getCurrentCatalog(id) {
     return this.httpClient.get(`(${this.getAllCatalog()}/${id}`);
   }
 
-  getCatalogDetails(catalogId){
+  getCatalogDetails(catalogId) {
     return this.httpClient.get<StoreCatalog>(this.FIND_BY_ID + catalogId);
   }
-  getCatalogStoreId(catalogId){
+
+  getCatalogStoreId(catalogId) {
     return this.httpClient.get<StoreCatalog>(this.FIND_CATALOG_STORE + catalogId);
   }
 
-  addCatalogStore(storeId: number, catalogId: number ): Observable<void> {
+  addCatalogStore(storeId: number, catalogId: number): Observable<void> {
     const url = `${this.apiUrl}/affecterStoreCatalogAStore/${storeId}/${catalogId}`;
     return this.httpClient.post<void>(url, null);
   }

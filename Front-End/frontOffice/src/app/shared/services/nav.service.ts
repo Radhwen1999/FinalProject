@@ -64,21 +64,6 @@ export class NavService {
 				//{ path: '/shop/collection/infinitescroll', title: 'Infinite Scroll', type: 'link' }
 			]
 		},
-		{
-			title: 'Products', type: 'sub', active: false, children: [
-				{
-					title: 'sidebar', type: 'sub', active: false, children: [
-						{ path: '/shop/product/left/sidebar/trim-dress', title: 'left-sidebar', type: 'link' },
-						{ path: '/shop/product/right/sidebar/trim-dress', title: 'right-sidebar', type: 'link' },
-						{ path: '/shop/product/no/sidebar/trim-dress', title: 'no-sidebar', type: 'link' }
-					]
-				},
-				{ path: '/shop/product/three/column/trim-dress', title: 'three-column', type: 'link' },
-				{ path: '/shop/product/four/image/belted-dress', title: 'four-image', type: 'link' },
-				{ path: '/shop/product/bundle/trim-dress', title: 'bundle-product', type: 'link' },
-				{ path: '/shop/product/image/outside/trim-dress', title: 'image-outside', type: 'link' }
-			]
-		},
 	];
 
 	LEFTMENUITEMS: Menu[] = [

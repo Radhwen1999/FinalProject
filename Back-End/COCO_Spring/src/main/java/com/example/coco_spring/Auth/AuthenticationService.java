@@ -11,15 +11,14 @@ import com.example.coco_spring.Service.EmailService;
 import com.example.coco_spring.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class AuthenticationService {
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
-        //emailService.sendWelcomeEmail(user);
+        emailService.sendWelcomeEmail(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -138,7 +137,7 @@ public class AuthenticationService {
         });
         tokenRepository.saveAll(validUserTokens);
     }
-    public String verifAccount(String mail, Integer code) {
+    /*public String verifAccount(String mail, Integer code) {
         User u = repository.findByEmail(mail).get();
         if (Objects.equals(u.getCodeActivation(), code)) {
             u.setLocked(false);
@@ -146,9 +145,26 @@ public class AuthenticationService {
             return "done";
         }
         else return "error";
+    }*/
+
+    public ResponseEntity<Map<String, String>> verifAccount(String mail, Integer code) {
+        User u = repository.findByEmail(mail).get();
+        if (Objects.equals(u.getCodeActivation(), code)) {
+            u.setLocked(false);
+            repository.save(u);
+            Map<String, String> response = new HashMap<>();
+            response.put("result", "done");
+            return ResponseEntity.ok(response);
+        }
+        else {
+            Map<String, String> response = new HashMap<>();
+            response.put("result", "error");
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
-	public AuthenticationResponse demResetPassword(String email) throws MessagingException {
+
+    public AuthenticationResponse demResetPassword(String email) throws MessagingException {
 		User user = repository.findByEmail(email).get();
 		Random random = new Random();
 		int randomNumber = random.nextInt(90000000) + 10000000;

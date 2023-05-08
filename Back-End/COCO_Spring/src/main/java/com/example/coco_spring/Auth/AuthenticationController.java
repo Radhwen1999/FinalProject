@@ -54,6 +54,24 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.register(request));
     }
 
+    @PostMapping("/registerB")
+    public ResponseEntity<AuthenticationResponse> registerB(
+            @Valid @RequestBody RegisterRequest request,
+            BindingResult result
+    ) throws MessagingException {
+        /*if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest()
+                    .body(AuthenticationResponse.builder()
+                            .errors(errors)
+                            .build());
+        }*/
+        return ResponseEntity.ok(service.registerB(request));
+    }
+
     /*@PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request,

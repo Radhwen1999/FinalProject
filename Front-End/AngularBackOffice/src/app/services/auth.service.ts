@@ -97,7 +97,7 @@ export class AuthService {
     const role = 'ROLE_SELLER';
     const rr: RegisterRequest = {username, firstname, lastname, email, password, role};
     return this.http.post(
-        `${this.API_URL}register`,
+        `${this.API_URL}registerB`,
         rr,
         httpOptions
     );

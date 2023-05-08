@@ -91,6 +91,23 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
+    public void sendWelcomeEmailB(User u) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        messageHelper.setSubject("Welcome");
+        messageHelper.setTo(u.getEmail());
+
+        Context context = new Context();
+        context.setVariable("code", u.getCodeActivation());
+        context.setVariable("name", u.getName());
+        //String content = templateEngine.process("email-template", context);
+        String content = templateEngine.process("welcomeMailB", context);
+
+
+        messageHelper.setText(content, true);
+        mailSender.send(mimeMessage);
+    }
+
     public void sendDailyOfferEmail(User u, List<Product> p) throws MessagingException {
         if (StringUtils.isEmpty(u.getEmail())) {
             logger.error("Recipient address is empty");

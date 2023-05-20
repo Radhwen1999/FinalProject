@@ -26,7 +26,8 @@ export class CollectionLeftSidebarComponent implements OnInit {
   public sortBy: string; // Sorting Order
   public mobileSidebar: boolean = false;
   public loader: boolean = true;
-
+  public collapse: boolean = true;
+  public productCollections: any[] = [];
   constructor(private route: ActivatedRoute, private router: Router,
               private viewScroller: ViewportScroller, public productService: ProductService) {
     // Get Filtered Products..
@@ -45,8 +46,23 @@ export class CollectionLeftSidebarComponent implements OnInit {
       }
 
   ngOnInit(): void {
-  this.getAllProducts();
+  //this.getAllProducts();
+  this.Initialization();
   console.log(this.products);
+  }
+
+  public Initialization() {
+    this.productService.getProducts.subscribe(response => {
+      // tslint:disable-next-line:triple-equals
+      this.products = response/*.filter(item => item.productCategory == 'electronics')*/;
+      // Get Product Collection
+      this.products.filter((item) => {
+        item.collection.filter((collection) => {
+          const index = this.productCollections.indexOf(item.productCategory);
+          if (index === -1) { this.productCollections.push(item.productCategory); }
+        });
+      });
+    });
   }
   getAllProducts(){
     this.productService.getProducts.subscribe((resp) => this.products = resp);

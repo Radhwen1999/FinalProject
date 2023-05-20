@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ProductSlider } from '../../../shared/data/slider';
 import { Product } from '../../../shared/classes/product';
 import { ProductService } from '../../../shared/services/product.service';
@@ -24,9 +24,12 @@ export class FashionOneComponent implements OnInit {
   public activePremium;
   public product;
   public stores: Store[] = [];
+
+
   constructor(public productService: ProductService, private imageProcessingService: ImageProcessingService, private route: ActivatedRoute
               // tslint:disable-next-line:align
       , private router: Router, private imageProcessingStore: ImageProceesingsService, private storeService: StoreService) {
+
   }
 
   public ProductSliderConfig: any = ProductSlider;

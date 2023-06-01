@@ -44,6 +44,7 @@ import { MasonryGridFourComponent } from './portfolio/masonry-grid-four/masonry-
 import { MasonryFullWidthComponent } from './portfolio/masonry-full-width/masonry-full-width.component';
 import { MapComponent } from './map/map.component';
 import {GetdirectionComponent} from './geo-code/getdirection.component';
+import { VerificationComponent } from './account/verification/verification.component';
 
 @NgModule({
     declarations: [
@@ -80,7 +81,8 @@ import {GetdirectionComponent} from './geo-code/getdirection.component';
         MasonryGridFourComponent,
         MasonryFullWidthComponent,
         MapComponent,
-        GetdirectionComponent    ],
+        GetdirectionComponent,
+        VerificationComponent    ],
     exports: [
         ReviewComponent,
         MapComponent,

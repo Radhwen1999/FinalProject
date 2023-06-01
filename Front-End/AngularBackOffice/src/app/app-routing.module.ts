@@ -85,7 +85,7 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {path: 'vendors/create-storecatalog' , component: CreateStorecatalogComponent, resolve : {
-          catalog: StrCtlgResolverService
+          catalog: StrCtlgResolverService, store: StoreResolverService
         }  }
     ],
   },

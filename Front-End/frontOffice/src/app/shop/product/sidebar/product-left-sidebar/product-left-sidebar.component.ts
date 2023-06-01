@@ -16,6 +16,7 @@ import {NgForm, UntypedFormGroup} from "@angular/forms";
 
 import {FileHandle} from '../../../../shared/classes/product';
 import {CartItem} from "../../../../shared/classes/CartItem";
+import {AuthService} from "../../../../shared/services/auth.service";
 
 
 @Component({
@@ -43,7 +44,9 @@ export class ProductLeftSidebarComponent implements OnInit {
   starCount = 5;
   public reviews: Review[] = [];
   public active = 1;
-
+  public collapse = true;
+  public productCollections: any[] = [];
+  verify = true;
   files: File[] = [];
   array: FileHandle[] = [];
 
@@ -52,13 +55,23 @@ export class ProductLeftSidebarComponent implements OnInit {
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
-
+  currentUser: User = new User();
+  public id ;
   constructor(private route: ActivatedRoute, private router: Router, private cartService: CartService,
-              public productService: ProductService, public dialog: MatDialog) {
+              public productService: ProductService, public dialog: MatDialog, private authService: AuthService) {
+    this.authService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      this.id = this.currentUser.id;
+    });
   }
 
   addProductToCartItem(cartId, productId, quantity){
-    this.productService.addProductToCartItem(cartId, productId, quantity).subscribe();
+    if (this.verify === true) {
+    this.productService.addProductToCartItem(cartId, productId, quantity).subscribe();  }
+
+  else{
+  this.router.navigate(['/pages/login']);
+}
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -74,7 +87,6 @@ export class ProductLeftSidebarComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-
   ngOnInit(): void {
     this.product = this.route.snapshot.data.product;
     this.router.navigate(['shop/product/left/sidebar/', {productId: this.product.productId}]);
@@ -83,6 +95,13 @@ export class ProductLeftSidebarComponent implements OnInit {
     this.verifyLikeProduct();
     console.log(this.product);
     this.findSub();
+    this.authService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      this.id = this.currentUser.id;
+    });
+    if (this.currentUser == null){
+      this.verify = false;
+    }
    // console.log(this.subsciption);
     //this.getDateUS();
   }
@@ -150,6 +169,7 @@ export class ProductLeftSidebarComponent implements OnInit {
     }) ;
   }
   reviewProduct(review: Review){
+    if (this.verify === true){
     this.productService.reviewProduct(review, this.product.productId).subscribe((product: Product) => {
           console.log('review added successfully', product);
           this.router.navigateByUrl('/home/fashion', { skipLocationChange: true }).then(() => {
@@ -159,7 +179,11 @@ export class ProductLeftSidebarComponent implements OnInit {
         },
         (error) => {
           console.error('Failed to add review', error);
-        });
+        });  }
+
+  else{
+  this.router.navigate(['/pages/login']);
+}
   }
 
   selectSize(size) {
@@ -183,20 +207,29 @@ export class ProductLeftSidebarComponent implements OnInit {
     if (this.counter > 1) { this.counter--; }
   }
   findSub() {
+    if (this.verify === true){
     this.productService.findSub(this.product.productId).subscribe((resp) => {
        this.subsciption = resp; console.log(this.subsciption);
        const datePipe = new DatePipe('en-US');
        this.getUSDate = datePipe.transform(this.subsciption.dateEndOfSubscription, 'MMM dd yyyy');
-       console.log(this.getUSDate); });
+       console.log(this.getUSDate); }); }
+
+    else{
+    this.router.navigate(['/pages/login']);
+}
   }
 
   // Add to cart
   async addToCart(productId) {
+    if (this.verify === true){
     console.log(productId);
 
     this.productService.addToCart(productId).subscribe((response) => {console.log(response); },
-        (error) => {console.log(error); });
+        (error) => {console.log(error); }); }
 
+    else{
+      this.router.navigate(['/pages/login']);
+    }
 
 
 
@@ -208,28 +241,43 @@ export class ProductLeftSidebarComponent implements OnInit {
 
   // Buy Now
   async buyNow(product: any) {
+    if (this.verify === true){
     product.quantity = this.counter || 1;
     const status = await this.productService.addToCart(product);
     if (status) {
       this.router.navigate(['/shop/checkout']);
+    }}
+    else{
+      this.router.navigate(['/pages/login']);
     }
   }
 
   // Add to Wishlist
   addToWishlist(product: Product) {
-    this.productService.likeProduct(product.productId).subscribe((resp) => {
-      console.log('like added successfully'); });
-    this.productService.addToWishlist(product);
-    this.router.navigateByUrl('/home/fashion', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['shop/product/left/sidebar/', {productId: this.product.productId}]);
-    });
+    // tslint:disable-next-line:triple-equals
+   if (this.verify === true){
+     this.productService.likeProduct(product.productId).subscribe((resp) => {
+       console.log('like added successfully'); });
+     this.productService.addToWishlist(product);
+     this.router.navigateByUrl('/home/fashion', { skipLocationChange: true }).then(() => {
+       this.router.navigate(['shop/product/left/sidebar/', {productId: this.product.productId}]);
+     });
+   }
+   else {
+     this.router.navigate(['/pages/login']);
+   }
   }
   dislikeProduct(product: Product) {
+    if (this.verify === true){
     this.productService.disLikeProduct(product.productId).subscribe((resp) => {
       console.log('dislike product successfully'); });
     this.router.navigateByUrl('/home/fashion', { skipLocationChange: true }).then(() => {
       this.router.navigate(['shop/product/left/sidebar/', {productId: this.product.productId}]);
     });
+    }
+    else {
+      this.router.navigate(['/pages/login']);
+    }
   }
   // Toggle Mobile Sidebar
   toggleMobileSidebar() {

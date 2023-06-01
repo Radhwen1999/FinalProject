@@ -14,7 +14,23 @@
                                 </span>
                             </div>
                             <!-- Category filter start -->
-                            <app-categories></app-categories>
+                            <!-- Start Categories List -->
+                            <div class="collection-collapse-block border-0" [class.open]="collapse">
+                                <h3 class="collapse-block-title" (click)="collapse = !collapse">Category</h3>
+                                <div class="collection-collapse-block-content">
+                                    <div class="collection-brand-filter">
+                                        <ul class="category-list">
+                                            <li *ngFor="let category of productCollections">
+                                                <a [routerLink]="['/shop/collection/left/sidebar']"
+                                                   [queryParams]="{ category: category}">
+                                                    {{ category }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Categories List -->
                         </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar colleps block stat -->
@@ -30,7 +46,7 @@
                         <!-- side-bar banner start here -->
                         <div class="collection-sidebar-banner">
                             <a [routerLink]="['/shop/collection/left/sidebar']">
-                                <img src="assets/images/collection-sidebar-banner.png" class="img-fluid" alt="banner">
+                                <img src="assets/images/shop.jpg" class="img-fluid" alt="banner">
                             </a>
                         </div>
                         <!-- side-bar banner end here -->
